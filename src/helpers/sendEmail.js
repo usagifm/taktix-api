@@ -38,4 +38,38 @@ module.exports = {
             }
         })
     },
+
+    sendNewPassword: (subject, password, toEmail) => {
+        var transporter = nodemailer.createTransport({
+            host: 'mail.sanedu.id',
+            port: 465,
+            secure: true,
+            auth: {
+                user: 'support@sanedu.id',
+                pass: 'testsatuduatiga',
+            },
+        })
+
+        var mailOptions = {
+            from: 'support@sanedu.id',
+            to: toEmail,
+            subject: subject,
+            text: "Password baru kamu: " + password + ", silahkan gunakan password baru untuk login ke aplikasi",
+        }
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error)
+                // res.json({
+                //   error: true,
+                //   "message": "Cant send email!"
+                // });
+            } else {
+                console.log('Email sent: ' + info.response)
+                // res.json({
+                //   error: false,
+                //   "message": "Your email has been sent!"
+                // });
+            }
+        })
+    },
 }

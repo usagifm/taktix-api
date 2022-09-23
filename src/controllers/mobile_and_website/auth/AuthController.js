@@ -1,7 +1,10 @@
 import jwt from 'jsonwebtoken'
 import { errorResponse } from '../../../helpers/errorResponse'
 import { User, VerificationToken } from '../../../db/models'
-import { sendEmailVerification } from '../../../helpers/sendEmail'
+import {
+    sendEmailVerification,
+    sendNewPassword,
+} from '../../../helpers/sendEmail'
 
 import Randomstring from 'randomstring'
 import bcrypt from 'bcrypt'
@@ -30,6 +33,7 @@ const getProfile = (googleId, isTutor) => {
 }
 
 const AuthController = {
+    // GOOGLE AUTH
     async googleLogin(req, res, next) {
         if (!req.user) {
             return res.status(401).send({ error: 'User was not authenticate' })
@@ -66,6 +70,8 @@ const AuthController = {
             console.log(err)
         }
     },
+
+    // REGULAR AUTH
     async login(req, res, next) {
         const { email, password } = req.body
 
@@ -138,7 +144,6 @@ const AuthController = {
 
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds)
         req.body.password = hashedPassword
-   
 
         try {
             const [user, created] = await User.findOrCreate({
@@ -235,6 +240,43 @@ const AuthController = {
             }
 
             return errorResponse(res, 400, error.message, errStacks)
+        }
+    },
+
+    async forgot(req, res, next) {
+        const email = req.body.email
+
+        const user = await User.findOne({ where: { email: email } })
+        if (!user) {
+            return errorResponse(res, 400, 'Email tidak ditemukan', [])
+        } else {
+            const newpassword = Randomstring.generate(12)
+            const hashedPassword = await bcrypt.hash(newpassword, saltRounds)
+
+            await User.update(
+                { password: hashedPassword },
+                {
+                    where: {
+                        email: email,
+                    },
+                }
+            )
+
+            // NODEMAILER SEND EMAIL WITH NEW PASSWORD
+            try {
+                sendNewPassword(
+                    'Password baru untuk akun ' + user.name,
+                    newpassword,
+                    user.email
+                )
+
+                return res.status(200).send({
+                    message:
+                        'Reset Password berhasil, silahkan cek email untuk melihat password baru anda, periksa folder inbox dan spam email anda',
+                })
+            } catch (error) {
+                console.log(error)
+            }
         }
     },
 }
