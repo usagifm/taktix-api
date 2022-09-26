@@ -262,24 +262,25 @@ const AuthController = {
             return errorResponse(res, 400, "Validation error", errors.array())
         }
 
-        const user = await User.findOne({ where: { email: email, isVerified: 1 } })
-        if (!user) {
-            return errorResponse(res, 400, 'Email tidak ditemukan', [])
-        } else {
-            const newpassword = Randomstring.generate(12)
-            const hashedPassword = await bcrypt.hash(newpassword, saltRounds)
+        try {
 
-            await User.update(
+            const user = await User.findOne({ where: { email: email, isVerified: 1 } })
+            if (!user) {
+                return errorResponse(res, 400, 'Email tidak ditemukan', [])
+            } else {
+                const newpassword = Randomstring.generate(12)
+                const hashedPassword = await bcrypt.hash(newpassword, saltRounds)
+
+                await User.update(
                 { password: hashedPassword },
                 {
                     where: {
                         email: email,
                     },
                 }
-            )
+                )
 
-            // NODEMAILER SEND EMAIL WITH NEW PASSWORD
-            try {
+                // NODEMAILER SEND EMAIL WITH NEW PASSWORD
                 sendNewPassword(
                     'Password baru untuk akun ' + user.name,
                     newpassword,
@@ -290,10 +291,18 @@ const AuthController = {
                     message:
                         'Reset Password berhasil, silahkan cek email untuk melihat password baru anda, periksa folder inbox dan spam email anda',
                 })
-            } catch (error) {
-                console.log(error)
             }
+            
+        } catch (error) {
+            console.log(error)
+            var errStacks = []
+
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
         }
+        
     },
 }
 
