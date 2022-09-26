@@ -1,10 +1,11 @@
 import jwt from 'jsonwebtoken'
-import { errorResponse } from '../../../helpers/errorResponse'
+import { errorResponse,errorMapper } from '../../../helpers/errorResponse'
 import { User, VerificationToken } from '../../../db/models'
 import {
     sendEmailVerification,
     sendNewPassword,
 } from '../../../helpers/sendEmail'
+import { validationResult } from 'express-validator'
 
 import Randomstring from 'randomstring'
 import bcrypt from 'bcrypt'
@@ -73,7 +74,15 @@ const AuthController = {
 
     // REGULAR AUTH
     async login(req, res, next) {
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return errorResponse(res, 400, "Validation error", errors.array())
+          }
+
         const { email, password } = req.body
+
+        
 
         try {
             const user = await User.findOne({ where: { email } })
@@ -132,14 +141,11 @@ const AuthController = {
     },
 
     async register(req, res, next) {
-        if (
-            !req.body.password ||
-            !req.body.password ||
-            req.body.passwordConfirmation != req.body.password
-        ) {
-            return errorResponse(res, 400, 'Password not valid')
-        }
 
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return errorResponse(res, 400, "Validation error", errors.array())
+          }
         req.body.isVerified = 0
 
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds)
@@ -150,6 +156,7 @@ const AuthController = {
                 where: { email: req.body.email },
                 defaults: req.body,
             })
+
 
             if (!created) {
                 console.log('user, ' + user.name)
@@ -163,11 +170,14 @@ const AuthController = {
                     )
                 }
 
-                return errorResponse(res, 400, 'Validation error', {
-                    email: 'email must be unique',
-                })
+                return errorResponse(res, 400, 'Validation error', [{
+                    msg: "Email must be unique",
+                    param: "email",
+                    location: "body"
+                }])
+                
 
-                //  if(user.isVerified == 0){
+                // if(user.isVerified == 0){
                 // VerificationToken.create(
                 //     {
                 //         userId: user.id,
@@ -202,6 +212,7 @@ const AuthController = {
 
                 //        return errorResponse(res,400,"Akun telah terdaftar",[])
                 //    }
+
             } else {
                 VerificationToken.create({
                     userId: user.id,
@@ -220,23 +231,23 @@ const AuthController = {
                         })
                     })
                     .catch((tokenErr) => {
+
+                        
                         return errorResponse(
                             res,
                             400,
                             tokenErr.message,
-                            tokenErr
+                            tokenErr.errors
                         )
                     })
             }
         } catch (error) {
             console.log(error)
 
-            const errStacks = {}
+            var errStacks = []
 
             if (error.errors) {
-                error.errors.map((er) => {
-                    errStacks[er.path] = er.message
-                })
+                errStacks = errorMapper(error.errors)
             }
 
             return errorResponse(res, 400, error.message, errStacks)
@@ -245,8 +256,13 @@ const AuthController = {
 
     async forgot(req, res, next) {
         const email = req.body.email
+        
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return errorResponse(res, 400, "Validation error", errors.array())
+        }
 
-        const user = await User.findOne({ where: { email: email } })
+        const user = await User.findOne({ where: { email: email, isVerified: 1 } })
         if (!user) {
             return errorResponse(res, 400, 'Email tidak ditemukan', [])
         } else {

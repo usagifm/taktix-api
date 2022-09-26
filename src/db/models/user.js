@@ -41,7 +41,10 @@ module.exports = (sequelize, DataTypes) => {
               validate:{
                 notEmpty: true,
                 isEmail: true
-              }
+              },unique: {
+                args: true,
+                msg: 'Email sudah digunakan'
+            }
             },
             profileImage: {
               type: DataTypes.STRING,
@@ -53,7 +56,10 @@ module.exports = (sequelize, DataTypes) => {
               type: DataTypes.STRING,
               validate:{
                 notEmpty: true,
-              }
+              },unique: {
+                args: true,
+                msg: 'Nomor HP sudah digunakan'
+            }
             },
             password: {
               type: DataTypes.STRING,
