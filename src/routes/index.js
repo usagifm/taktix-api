@@ -8,6 +8,7 @@ const routes = (app) => {
     app.post('/register', AuthController.register)
 
     app.post('/login', AuthController.login)
+    app.post('/forgot', AuthController.forgot)
     app.get('/verification', VerificationController.verifyUser)
 
     // User Google Sign In
