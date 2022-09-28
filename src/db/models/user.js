@@ -36,6 +36,12 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
               }
             },
+            username:{
+              type: DataTypes.STRING,
+              validate:{
+                notEmpty: true
+              }
+            },
             email:  {
               type: DataTypes.STRING,
               validate:{
@@ -46,7 +52,13 @@ module.exports = (sequelize, DataTypes) => {
                 msg: 'Email sudah digunakan'
             }
             },
-            profileImage: {
+            roleId: {
+              type: DataTypes.INTEGER,
+              validate:{
+                notEmpty: true
+              }
+            },
+            photoProfile: {
               type: DataTypes.STRING,
               validate:{
                 notEmpty: true
@@ -68,14 +80,23 @@ module.exports = (sequelize, DataTypes) => {
                 min: 6, 
               }
             },
+            gender: {
+              type: DataTypes.STRING,
+              validate:{
+                notEmpty: true,
+                min: 6, 
+              }
+            },
+            fcmToken: DataTypes.STRING,
+            birthDate: DataTypes.DATE,
             googleId: DataTypes.STRING,
             provider: DataTypes.STRING,
-            isTutor: DataTypes.BOOLEAN,
             isVerified: DataTypes.BOOLEAN,
+            deletedAt: DataTypes.TIMESTAMP,
         },
         {
             sequelize,
-            modelName: 'User',
+            modelName: 'tbl_users',
         }
     )
     
