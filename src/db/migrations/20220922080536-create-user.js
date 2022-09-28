@@ -12,12 +12,20 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
+            username: {
+                type: Sequelize.STRING,
+                allowNull: false,
+            },
             email: {
                 type: Sequelize.STRING,
                 allowNull: false,
                 unique: true,
             },
-            profileImage: {
+            gender: {
+                allowNull: false,
+                type: Sequelize.INTEGER,
+            },
+            photoProfile: {
                 type: Sequelize.TEXT,
             },
             phoneNumber: {
@@ -30,22 +38,32 @@ module.exports = {
             googleId: {
                 type: Sequelize.STRING,
             },
+            fcmToken: {
+                type: Sequelize.STRING,
+            },
             provider: {
                 type: Sequelize.STRING,
             },
-            isTutor: {
-                type: Sequelize.BOOLEAN,
+            roleId: {
+                type: Sequelize.INTEGER,
                 allowNull: false,
             },
             isVerified: {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,
             },
+            birthDate: {
+                type: Sequelize.DATE,
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
             },
             updatedAt: {
+                allowNull: false,
+                type: Sequelize.DATE,
+            },
+            deletedAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
             },
