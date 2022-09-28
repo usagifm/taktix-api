@@ -91,7 +91,6 @@ module.exports = (sequelize, DataTypes) => {
             googleId: DataTypes.STRING,
             fcmToken: DataTypes.STRING,
             provider: DataTypes.STRING,
-            isTutor: DataTypes.BOOLEAN,
             isVerified: DataTypes.BOOLEAN,
         },
         {

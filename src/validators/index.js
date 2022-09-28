@@ -46,11 +46,11 @@ exports.validateRegisterUser = [
             return true
         }),
 
-    check('isTutor')
+    check('roleId')
         .exists()
-        .withMessage('isTutor wajib di isi')
+        .withMessage('roleId wajib di isi')
         .notEmpty()
-        .withMessage('isTutor tidak boleh kosong'),
+        .withMessage('roleId tidak boleh kosong'),
 ]
 
 exports.validateForgot = [

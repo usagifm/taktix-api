@@ -82,8 +82,6 @@ const AuthController = {
 
         const { email, password } = req.body
 
-        
-
         try {
             const user = await User.findOne({ where: { email } })
 
@@ -146,7 +144,9 @@ const AuthController = {
         if (!errors.isEmpty()) {
             return errorResponse(res, 400, "Validation error", errors.array())
           }
+          
         req.body.isVerified = 0
+        req.body.username = req.body.name //default username = name
 
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds)
         req.body.password = hashedPassword
@@ -251,6 +251,21 @@ const AuthController = {
             }
 
             return errorResponse(res, 400, error.message, errStacks)
+        }
+    },
+
+    async logout(req, res, next) {  
+        try {
+            const clear = localStorage.clear();
+            if(clear)
+            // will return error because no localStorage detected
+
+            return res.status(200).send({
+                message: 'Logout Sukses!',
+            })
+
+        } catch (error) {
+            return errorResponse(res, 400, 'No Local Storage Found!', [])
         }
     },
 

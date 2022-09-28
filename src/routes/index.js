@@ -6,10 +6,14 @@ import validator from '../validators'
 require('../services/google')
 
 const routes = (app) => {
+
+    // User Regular Auth
     app.post('/register', validator.validateRegisterUser ,AuthController.register)
-    app.post('/login',validator.validateLoginUser , AuthController.login)
+    app.post('/login', validator.validateLoginUser , AuthController.login)
+    app.delete('/logout', AuthController.logout)
     app.post('/forgot', validator.validateForgot ,AuthController.forgot)
     app.get('/verification', VerificationController.verifyUser)
+    
 
     // User Google Sign In
     app.post(
