@@ -10,19 +10,20 @@ module.exports = (sequelize, DataTypes) => {
         static associate(models) {
             VerificationToken.belongsTo(models.User, {
                 as: 'user',
-                foreignKey: 'userId',
+                foreignKey: 'user_id',
                 foreignKeyConstraint: true,
             })
         }
     }
     VerificationToken.init(
         {
-            userId: DataTypes.INTEGER,
+            user_id: DataTypes.INTEGER,
             token: DataTypes.STRING,
         },
         {
             sequelize,
             modelName: 'VerificationToken',
+            underscored: true,
         }
     )
     return VerificationToken

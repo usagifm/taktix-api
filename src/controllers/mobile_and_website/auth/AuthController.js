@@ -87,9 +87,9 @@ const AuthController = {
 
             if (user) {
                 if (bcrypt.compareSync(password, user.password)) {
-                    if (user.isVerified == 0) {
+                    if (user.is_verified == 0) {
                         VerificationToken.create({
-                            userId: user.id,
+                            user_id: user.id,
                             token: Randomstring.generate(16),
                         })
                             .then((result) => {
@@ -114,7 +114,7 @@ const AuthController = {
                                     tokenErr
                                 )
                             })
-                    } else if (user.isVerified == 1) {
+                    } else if (user.is_verified == 1) {
                         const token = jwt.sign({ user }, process.env.JWT_SECRET)
                         return res.status(200).send({ token, user })
                     }
@@ -145,7 +145,7 @@ const AuthController = {
             return errorResponse(res, 400, "Validation error", errors.array())
           }
           
-        req.body.isVerified = 0
+        req.body.is_verified = 0
         req.body.username = req.body.name //default username = name
 
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds)
@@ -215,7 +215,7 @@ const AuthController = {
 
             } else {
                 VerificationToken.create({
-                    userId: user.id,
+                    user_id: user.id,
                     token: Randomstring.generate(16),
                 })
                     .then((result) => {
@@ -279,7 +279,7 @@ const AuthController = {
 
         try {
 
-            const user = await User.findOne({ where: { email: email, isVerified: 1 } })
+            const user = await User.findOne({ where: { email: email, is_verified: 1 } })
             if (!user) {
                 return errorResponse(res, 400, 'Email tidak ditemukan', [])
             } else {

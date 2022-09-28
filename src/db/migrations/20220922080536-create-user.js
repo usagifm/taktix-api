@@ -25,46 +25,46 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.INTEGER,
             },
-            photoProfile: {
+            photo_profile: {
                 type: Sequelize.TEXT,
             },
-            phoneNumber: {
+            phone_number: {
                 type: Sequelize.STRING,
                 unique: true,
             },
             password: {
                 type: Sequelize.STRING,
             },
-            googleId: {
+            google_id: {
                 type: Sequelize.STRING,
             },
-            fcmToken: {
+            fcm_token: {
                 type: Sequelize.STRING,
             },
             provider: {
                 type: Sequelize.STRING,
             },
-            roleId: {
+            role_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            isVerified: {
+            is_verified: {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,
             },
-            birthDate: {
+            birth_date: {
                 type: Sequelize.DATE,
             },
-            createdAt: {
+            created_at: {
                 allowNull: false,
                 type: Sequelize.DATE,
             },
-            updatedAt: {
+            updated_at: {
                 allowNull: false,
                 type: Sequelize.DATE,
             },
-            deletedAt: {
-                allowNull: false,
+            deleted_at: {
+                allowNull: true,
                 type: Sequelize.DATE,
             },
         })

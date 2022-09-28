@@ -52,13 +52,13 @@ module.exports = (sequelize, DataTypes) => {
                 msg: 'Email sudah digunakan'
             }
             },
-            photoProfile: {
+            photo_profile: {
               type: DataTypes.STRING,
               validate:{
                 notEmpty: true
               }
             },
-            roleId: {
+            role_id: {
               type: DataTypes.INTEGER,
               validate:{
                 notEmpty: true
@@ -70,7 +70,7 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true
               }
             },
-            phoneNumber: {
+            phone_number: {
               type: DataTypes.STRING,
               validate:{
                 notEmpty: true,
@@ -86,16 +86,20 @@ module.exports = (sequelize, DataTypes) => {
                 min: 6, 
               }
             },
-            birthDate: DataTypes.DATE,
-            deletedAt: DataTypes.DATE,
-            googleId: DataTypes.STRING,
-            fcmToken: DataTypes.STRING,
+            birth_date: DataTypes.DATE,
+            google_id: DataTypes.STRING,
+            fcm_token: DataTypes.STRING,
             provider: DataTypes.STRING,
-            isVerified: DataTypes.BOOLEAN,
+            is_verified: DataTypes.BOOLEAN,
         },
         {
             sequelize,
             modelName: 'User',
+            underscored: true,
+            paranoid: true,
+
+            // Custom Name
+            deletedAt: 'deleted_at',
         }
     )
     

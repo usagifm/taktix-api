@@ -7,18 +7,18 @@ const VerificationController = {
             where: { email: req.query.email },
         })
             .then((user) => {
-                if (user.isVerified) {
+                if (user.is_verified) {
                     return res
                         .status(202)
                         .json({ message: 'Email Already Verified' })
                 } else {
                     return VerificationToken.findOne({
-                        where: { token: req.query.verificationToken, userId: user.id },
+                        where: { token: req.query.verificationToken, user_id: user.id },
                     })
                         .then((foundToken) => {
                             if (foundToken) {
                                 return user
-                                    .update({ isVerified: true })
+                                    .update({ is_verified: true })
                                     .then((updatedUser) => {
                                         return res
                                             .status(202)
