@@ -13,7 +13,7 @@ const VerificationController = {
                         .json({ message: 'Email Already Verified' })
                 } else {
                     return VerificationToken.findOne({
-                        where: { token: req.query.verificationToken, user_id: user.id },
+                        where: { user_id: user.id },
                     })
                         .then((foundToken) => {
                             if (foundToken) {

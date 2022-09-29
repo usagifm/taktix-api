@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 import { errorResponse,errorMapper } from '../../../helpers/errorResponse'
 import { User, VerificationToken } from '../../../db/models'
+const { Op } = require("sequelize");
 import {
     sendEmailVerification,
     sendNewPassword,
@@ -11,22 +12,22 @@ import Randomstring from 'randomstring'
 import bcrypt from 'bcrypt'
 const saltRounds = 10
 
-const getProfile = (googleId, isTutor) => {
+const getProfile = (googleId, role_id) => {
     const id = googleId.payload.sub
     const displayName = googleId.payload.name
     const email = googleId.payload.email
     const provider = 'google'
-    const profileImage = googleId.payload.picture
+    const photo_profile = googleId.payload.picture
     if (email?.length) {
         // equals to =>> if (email && email.length)
         return {
-            googleId: id,
+            google_id: id,
             name: displayName,
             email,
             provider,
-            profileImage,
-            isVerified: 1,
-            isTutor,
+            photo_profile,
+            is_verified: 1,
+            role_id,
         }
     }
 
@@ -40,12 +41,12 @@ const AuthController = {
             return res.status(401).send({ error: 'User was not authenticate' })
         }
 
-        const isTutor = req.query.isTutor
+        const role_id = req.query.role_id
         console.log('user ', req.user)
 
         try {
             const user = await User.findOne({
-                where: { googleId: req.user.payload.sub },
+                where: { google_id: req.user.payload.sub },
             })
 
             if (!user) {
@@ -55,7 +56,7 @@ const AuthController = {
 
                 if (!user) {
                     const user = await User.create(
-                        getProfile(req.user, isTutor)
+                        getProfile(req.user, role_id)
                     )
                     const token = jwt.sign({ user }, process.env.JWT_SECRET)
                     return res.status(200).send({ token, user })
@@ -83,7 +84,10 @@ const AuthController = {
         const { email, password } = req.body
 
         try {
-            const user = await User.findOne({ where: { email } })
+            const user = await User.findOne({where: { [Op.or]: [
+                { email: email },
+                { username: email }
+              ] } })
 
             if (user) {
                 if (bcrypt.compareSync(password, user.password)) {
@@ -146,10 +150,13 @@ const AuthController = {
           }
           
         req.body.is_verified = 0
-        req.body.username = req.body.name //default username = name
+        // should be unique, so must include on the req body
+        // req.body.username = req.body.name //default username = name
 
         const hashedPassword = await bcrypt.hash(req.body.password, saltRounds)
         req.body.password = hashedPassword
+
+        delete req.body.password_confirmation 
 
         try {
             const [user, created] = await User.findOrCreate({

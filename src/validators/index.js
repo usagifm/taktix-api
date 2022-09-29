@@ -15,10 +15,14 @@ exports.validateRegisterUser = [
         .withMessage('Email tidak boleh kosong')
         .isEmail()
         .withMessage('Format email salah'),
-    
 
-        check('phoneNumber')
+        check('username')
+        .exists()
+        .withMessage('Username wajib di isi')
+        .notEmpty()
+        .withMessage('Username tidak boleh kosong'),
 
+        check('phone_number')
         .exists()
         .withMessage('Nomor HP wajib di isi')
         .notEmpty()
@@ -32,7 +36,7 @@ exports.validateRegisterUser = [
         .notEmpty()
         .withMessage('Password tidak boleh kosong'),
 
-    check('passwordConfirmation')
+    check('password_confirmation')
         .exists()
         .withMessage('Password Konfirmasi wajib di isi')
         .notEmpty()
@@ -46,11 +50,11 @@ exports.validateRegisterUser = [
             return true
         }),
 
-    check('roleId')
+    check('role_id')
         .exists()
-        .withMessage('roleId wajib di isi')
+        .withMessage('Role id wajib di isi')
         .notEmpty()
-        .withMessage('roleId tidak boleh kosong'),
+        .withMessage('Role id tidak boleh kosong'),
 ]
 
 exports.validateForgot = [
@@ -59,6 +63,7 @@ exports.validateForgot = [
         .withMessage('Email wajib di isi')
         .notEmpty()
         .withMessage('Email tidak boleh kosong'),
+        
 ]
 
 exports.validateLoginUser = [
@@ -68,7 +73,7 @@ exports.validateLoginUser = [
         .notEmpty()
         .withMessage('Email tidak boleh kosong'),
 
-        check('password')
+    check('password')
         .exists()
         .withMessage('Password wajib di isi')
         .notEmpty()
