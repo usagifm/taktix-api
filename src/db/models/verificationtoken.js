@@ -24,6 +24,13 @@ module.exports = (sequelize, DataTypes) => {
             sequelize,
             modelName: 'VerificationToken',
             underscored: true,
+            paranoid: true,
+
+            // Custom Name
+            createdAt: 'created_at',
+            updatedAt: 'updated_at',
+            deletedAt: 'deleted_at',
+         
         }
     )
     return VerificationToken

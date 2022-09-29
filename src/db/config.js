@@ -5,6 +5,7 @@ module.exports = {
         database: 'taktix_db',
         use_env_variable: 'DATABASE_DEV_URL',
         dialect: 'mysql',
+
     },
     production: {
         database: 'taktix_db',
@@ -16,5 +17,6 @@ module.exports = {
                 rejectUnauthorized: false,
             },
         },
+
     },
 }

@@ -1,7 +1,7 @@
 module.exports = {
     up: function (queryInterface, Sequelize) {
         return queryInterface
-            .createTable('VerificationTokens', {
+            .createTable('verification_tokens', {
                 id: {
                     allowNull: false,
                     autoIncrement: true,
@@ -27,15 +27,19 @@ module.exports = {
                     allowNull: false,
                     type: Sequelize.DATE,
                 },
+                deleted_at: {
+                    allowNull: true,
+                    type: Sequelize.DATE,
+                },
             })
             .then(() => {
-                console.log('created VerificationToken table')
+                console.log('created verification_tokens table')
                 return queryInterface.sequelize.query(`
-        CREATE EVENT expireToken
-        ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL  1 DAY 
-        DO
-        DELETE FROM VerificationTokens WHERE createdAt < DATE_SUB(NOW(), INTERVAL 1 DAY);
-        `)
+                    CREATE EVENT expireToken
+                    ON SCHEDULE AT CURRENT_TIMESTAMP + INTERVAL  1 DAY 
+                    DO
+                    DELETE FROM verification_tokens WHERE createdAt < DATE_SUB(NOW(), INTERVAL 1 DAY);
+                    `)
             })
             .then(() => {
                 console.log('expireToken event created')
@@ -43,9 +47,9 @@ module.exports = {
     },
     down: function (queryInterface) {
         return queryInterface
-            .dropTable('VerificationTokens')
+            .dropTable('verification_tokens')
             .then(() => {
-                console.log('VerificationTokens table dropped')
+                console.log('verification_tokens table dropped')
                 return queryInterface.sequelize.query(
                     `DROP EVENT IF EXISTS expireToken`
                 )

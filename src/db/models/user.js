@@ -13,7 +13,11 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            User.hasOne(models.VerificationToken);
+            User.hasOne(models.VerificationToken,{
+              as: 'verification_token',
+              foreignKey: 'user_id',
+              foreignKeyConstraint: true,
+          });
         }
 
         
@@ -40,7 +44,10 @@ module.exports = (sequelize, DataTypes) => {
               type: DataTypes.STRING,
               validate:{
                 notEmpty: true
-              }
+              },unique: {
+                args: true,
+                msg: 'Username sudah digunakan'
+            }
             },  
             email:  {
               type: DataTypes.STRING,
@@ -98,8 +105,12 @@ module.exports = (sequelize, DataTypes) => {
             underscored: true,
             paranoid: true,
 
+ 
             // Custom Name
+            createdAt: 'created_at',
+            updatedAt: 'updated_at',
             deletedAt: 'deleted_at',
+         
         }
     )
     
