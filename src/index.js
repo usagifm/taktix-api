@@ -4,7 +4,6 @@ import logger from 'morgan'
 import bodyParser from 'body-parser'
 import routes from './routes'
 import nodemailer from 'nodemailer'
-
 import passport from 'passport'
 
 const app = express()
