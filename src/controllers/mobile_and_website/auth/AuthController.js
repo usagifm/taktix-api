@@ -7,7 +7,6 @@ import {
     sendNewPassword,
 } from '../../../helpers/sendEmail'
 import { validationResult } from 'express-validator'
-
 import Randomstring from 'randomstring'
 import bcrypt from 'bcrypt'
 const saltRounds = 10
