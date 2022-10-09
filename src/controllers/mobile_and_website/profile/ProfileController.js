@@ -62,7 +62,7 @@ const ProfileController = {
                         },
                     }
                 )
-                return res.status(200).json({ msg: 'Profile Berhasil Diubah' })
+                return res.status(200).json({ message: 'Profile Berhasil Diubah' })
             } else {
                 return errorResponse(res, 400, 'User Tidak Ditemukan', [])
             }
@@ -114,7 +114,7 @@ const ProfileController = {
                 )
                 return res
                     .status(200)
-                    .json({ msg: 'Password Berhasil Diubah' })
+                    .json({ message: 'Password Berhasil Diubah' })
             } else {
                 return errorResponse(res, 400, 'User Tidak Ditemukan', [])
             }
