@@ -2,17 +2,13 @@ import { errorResponse, errorMapper } from '../../../helpers/errorResponse'
 import { User } from '../../../db/models'
 import { validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
-import jwt_decode from 'jwt-decode'
 const saltRounds = 10
 
 const ProfileController = {
     async getProfile(req, res, next) {
         try {
-            // Get Token and Decode
-            var token = req.headers.token
-            var decoded = jwt_decode(token)
             // // Get Decoded ID
-            var user_id = decoded.user.id
+            var user_id = req.user.user.id
 
             const user = await User.findOne({
                 where: {
@@ -41,11 +37,8 @@ const ProfileController = {
             return errorResponse(res, 400, 'Validation error', errors.array())
         }
         try {
-            // Get Token and Decode
-            var token = req.headers.token
-            var decoded = jwt_decode(token)
             // // Get Decoded ID
-            var user_id = decoded.user.id
+            var user_id = req.user.user.id
 
             const user = await User.findOne({
                 where: {
@@ -92,11 +85,8 @@ const ProfileController = {
         }
 
         try {
-            // Get Token and Decode
-            var token = req.headers.token
-            var decoded = jwt_decode(token)
             // // Get Decoded ID
-            var user_id = decoded.user.id
+            var user_id = req.user.user.id
 
             const user = await User.findOne({
                 where: {

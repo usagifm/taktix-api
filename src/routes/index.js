@@ -22,9 +22,9 @@ const routes = (app) => {
     )
 
     // User Profile
-    app.get('/profile', ProfileController.getProfile)
-    app.patch('/profile/edit', validator.validateEditProfile, ProfileController.editProfile)
-    app.patch('/profile/password', validator.validateEditPassword, ProfileController.editPassword)
+    app.get('/profile',checkToken, ProfileController.getProfile)
+    app.patch('/profile/edit',checkToken, validator.validateEditProfile, ProfileController.editProfile)
+    app.patch('/profile/password',checkToken, validator.validateEditPassword, ProfileController.editPassword)
 }
 
 export default routes
