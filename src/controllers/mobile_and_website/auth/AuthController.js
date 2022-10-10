@@ -130,7 +130,7 @@ const AuthController = {
         } catch (error) {
             console.log(error)
 
-            const errStacks = {}
+            let errStacks = {}
 
             if (error.errors) {
                 error.errors.map((er) => {
@@ -250,7 +250,7 @@ const AuthController = {
         } catch (error) {
             console.log(error)
 
-            var errStacks = []
+            let errStacks = []
 
             if (error.errors) {
                 errStacks = errorMapper(error.errors)
@@ -316,7 +316,7 @@ const AuthController = {
             
         } catch (error) {
             console.log(error)
-            var errStacks = []
+            let errStacks = []
 
             if (error.errors) {
                 errStacks = errorMapper(error.errors)

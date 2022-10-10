@@ -23,7 +23,7 @@ const ProfileController = {
             }
         } catch (error) {
             console.log(error)
-            const errStacks = []
+            let errStacks = []
             if (error.errors) {
                 errStacks = errorMapper(error.errors)
             }
@@ -40,6 +40,12 @@ const ProfileController = {
             // // Get Decoded ID
             var user_id = req.user.user.id
 
+
+            if (req.body.photo_profile == null && req.body.photo_profile == '') 
+            {
+                delete req.body.photo_profile
+            }
+
             const user = await User.findOne({
                 where: {
                     id: user_id,
@@ -48,14 +54,7 @@ const ProfileController = {
 
             if (user) {
                 await User.update(
-                    {
-                        name: req.body.name,
-                        username: req.body.username,
-                        email: req.body.email,
-                        birth_date: req.body.birth_date,
-                        phone_number: req.body.phone_number,
-                        gender: req.body.gender,
-                    },
+                    req.body,
                     {
                         where: {
                             id: user_id,
@@ -69,7 +68,7 @@ const ProfileController = {
         } catch (error) {
             console.log(error)
 
-            const errStacks = []
+            let errStacks = []
 
             if (error.errors) {
                 errStacks = errorMapper(error.errors)
@@ -121,7 +120,7 @@ const ProfileController = {
         } catch (error) {
             console.log(error)
 
-            const errStacks = []
+            let errStacks = []
 
             if (error.errors) {
                 errStacks = errorMapper(error.errors)
