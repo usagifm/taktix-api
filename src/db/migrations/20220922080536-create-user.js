@@ -46,10 +46,12 @@ module.exports = {
             role_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
+                defaultValue: 0
             },
             is_verified: {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,
+                defaultValue: 0
             },
             birth_date: {
                 type: Sequelize.DATE,

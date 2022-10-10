@@ -3,10 +3,15 @@ const { checkToken } = require('../jwt/tokenValidation')
 import AuthController from '../controllers/mobile_and_website/auth/AuthController'
 import VerificationController from '../controllers/mobile_and_website/auth/VerificationController'
 import ProfileController from '../controllers/mobile_and_website/profile/ProfileController'
+import GeneralController from '../controllers/mobile_and_website/general/GeneralController'
 import validator from '../validators'
 require('../services/google')
+import {upload} from './../helpers/multer'
 
-const routes = (app) => {
+const routes = (app) => {   
+    // GENERAL
+    app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
+
     // User Regular Auth
     app.post('/register', validator.validateRegisterUser, AuthController.register)
     app.post('/login', validator.validateLoginUser, AuthController.login)
