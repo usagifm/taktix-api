@@ -12,7 +12,7 @@ module.exports = {
         })
 
         var link =
-            'http://localhost:2000/verification?verificationToken=' +
+            `${process.env.APP_URL}/verification?verificationToken=` +
             token +
             '&email=' +
             toEmail
