@@ -10,8 +10,8 @@ import {upload} from './../helpers/multer'
 
 const routes = (app) => {   
     // GENERAL
-    app.post('/',(req, res) => {
-        res.send('Welcome to Taktix API Server !')
+    app.get('/',(req, res) => {
+        res.send('Welcome to Taktix API Server, Server is okay!')
       })
     app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
     
