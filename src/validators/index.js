@@ -7,7 +7,7 @@ exports.validateRegisterUser = [
         .withMessage('Nama wajib di isi')
         .notEmpty()
         .withMessage('Nama tidak boleh kosong'),
-        
+
     check('email')
         .exists()
         .withMessage('Email wajib di isi')
@@ -80,6 +80,14 @@ exports.validateLoginUser = [
 ]
 
 exports.validateEditPassword = [
+
+    check('old_password')
+        .exists()
+        .withMessage('Password lama wajib di isi')
+        .notEmpty()
+        .withMessage('Password lama tidak boleh kosong')
+        .isLength({ min: 6 }),
+
     check('new_password')
         .exists()
         .withMessage('Password baru wajib di isi')
