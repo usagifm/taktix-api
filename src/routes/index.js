@@ -7,6 +7,7 @@ import GeneralController from '../controllers/mobile_and_website/general/General
 import validator from '../validators'
 require('../services/google')
 import {upload} from './../helpers/multer'
+import ExamController from '../controllers/mobile_and_website/siswa/ExamController'
 
 const routes = (app) => {   
     // GENERAL
@@ -14,7 +15,6 @@ const routes = (app) => {
         res.send('Welcome to Taktix API Server, Server is okay!')
       })
     app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
-    
 
     // User Regular Auth
     app.post('/register', validator.validateRegisterUser, AuthController.register)
@@ -34,6 +34,15 @@ const routes = (app) => {
     app.get('/profile',checkToken, ProfileController.getProfile)
     app.patch('/profile/edit',checkToken, validator.validateEditProfile, ProfileController.editProfile)
     app.patch('/profile/password',checkToken, validator.validateEditPassword, ProfileController.editPassword)
+
+    // Both User 
+    app.get('/exam', checkToken ,validator.validateGetExams, ExamController.getExams)
+
+    // User Siswa 
+    app.get('/student/exam/:exam_id', checkToken , ExamController.getExamDetail)
+    app.post('/student/exam/:exam_id/assign', checkToken , ExamController.assignExam)
+    app.get('/student/exam', checkToken , ExamController.getUserExams)
+    
 }
 
 export default routes

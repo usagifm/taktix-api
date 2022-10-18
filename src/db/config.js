@@ -5,6 +5,9 @@ module.exports = {
         database: 'taktix_db',
         use_env_variable: 'DATABASE_DEV_URL',
         dialect: 'mysql',
+        define: {
+            underscored: true,
+          }
 
     },
     production: {
