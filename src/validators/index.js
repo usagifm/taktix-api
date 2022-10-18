@@ -147,3 +147,16 @@ exports.validateEditProfile = [
         .withMessage('Format email salah'),
 ]
 
+
+
+
+exports.validateGetExams = [
+    check('per_page')
+        .exists()
+        .withMessage('Masukan nomor halaman data dalam query parameter'),
+
+    check('per_page')
+        .exists()
+        .withMessage('Masukan jumlah per page data dalam query parameter'),
+  
+]

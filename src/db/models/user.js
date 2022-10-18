@@ -18,6 +18,14 @@ module.exports = (sequelize, DataTypes) => {
               foreignKey: 'user_id',
               foreignKeyConstraint: true,
           });
+
+          User.belongsToMany(models.Exam, {
+            as: 'user_exams',
+            through: models.ExamEnrollments,
+            foreignKey: {
+             name: 'user_id'
+           }
+          });
         }
 
         
