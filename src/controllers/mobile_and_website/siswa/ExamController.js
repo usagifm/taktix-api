@@ -1,7 +1,7 @@
 import { errorResponse, errorMapper } from '../../../helpers/errorResponse'
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
-import { User,Exam,ExamEnrollments } from '../../../db/models'
+import { User,Exam,ExamEnrollments,ExamQuestions } from '../../../db/models'
 import { pagination } from '../../../helpers/pagination';
 import { validationResult } from 'express-validator'
 
@@ -48,11 +48,9 @@ const ExamController = {
         try {
 
             const exam = await Exam.findOne({
-                // include: [
-                //     { model: SetMaster, as: 'category' },
-                //     { model: SetMaster, as: 'exam_category' },
-                //     { model: SetMaster, as: 'grade' },
-                // ],
+                include: [
+                    { model: ExamQuestions, as: 'questions' },
+                ],
                 where: {
                     id: req.params.exam_id,
                 },
@@ -136,12 +134,78 @@ const ExamController = {
         }
     },
 
+    async getUserExamsPagination(req, res, next) {
+        try {
+
+            const userExam = await ExamEnrollments.findAll({
+                where: {
+                    user_id: req.user.user.id
+                }
+            })
+
+        
+
+            const where = {};
+            const page = req.query.page ? parseInt(req.query.page) : 1;
+            const per_page = req.query.page ? parseInt(req.query.per_page) : 1;
+            const offset = 0 + (req.query.page - 1) * per_page
+            const {title} = req.query;
+            if (title) where.title = { [Op.like]: `%${title}%`}
+          
+
+            if (userExam.length > 0 ){
+
+                var examId = userExam.map(function(item) {
+                    return item['exam_id'];
+                });
+
+                where.id = examId
+                var { count, rows } = await Exam.findAndCountAll({
+                    where,
+                    offset: offset,
+                    limit: per_page,
+                    order: [['created_at', 'DESC']],
+                    distinct: true,                   
+                })
+
+                const result = pagination({
+                    data: rows,
+                    count,
+                    page,
+                    per_page
+                });
+
+                return res.status(200).send(result)
+
+            }else {
+
+                const result = pagination({
+                    data: userExam,
+                    count: userExam.length,
+                    page,
+                    per_page
+                });
+
+                return res.status(200).send(result)
+            }
+
+        } catch (error) {
+            console.log(error)
+            let errStacks = []
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
+        }
+    },
+
+
     async getUserExams(req, res, next) {
         try {
 
             const user = await User.findOne({
                 include: [
-                    { model: Exam, as: 'user_exams' },
+                    { model: Exam, as: 'user_exams',order: [['created_at', 'DESC']], },
                 ],
                 where: {
                     id: req.user.user.id,
