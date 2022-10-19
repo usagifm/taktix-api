@@ -41,6 +41,7 @@ const routes = (app) => {
     // User Siswa 
     app.get('/student/exam/:exam_id', checkToken , ExamController.getExamDetail)
     app.post('/student/exam/:exam_id/assign', checkToken , ExamController.assignExam)
+    app.get('/student/exam-pagination', checkToken , ExamController.getUserExamsPagination)
     app.get('/student/exam', checkToken , ExamController.getUserExams)
     
 }
