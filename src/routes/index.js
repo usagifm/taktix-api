@@ -12,7 +12,8 @@ import ExamController from '../controllers/mobile_and_website/siswa/ExamControll
 const routes = (app) => {   
     // GENERAL
     app.get('/',(req, res) => {
-        res.send('Welcome to Taktix API Server, Server is okay!')
+        // res.send('Welcome to Taktix API Server, Server is okay!')
+        res.sendFile('welcome.html', {root: __dirname })
       })
     app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
 
