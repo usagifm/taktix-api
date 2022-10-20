@@ -26,11 +26,11 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'ExamEnrollments',
     underscored: true,
-    paranoid: true,
+    // paranoid: true,
     // Custom Name
     createdAt: 'created_at',
     updatedAt: 'updated_at',
-    deletedAt: 'deleted_at',
+    // deletedAt: 'deleted_at',
   });
   return ExamEnrollments;
 };
