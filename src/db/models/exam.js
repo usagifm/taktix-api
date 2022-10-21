@@ -14,8 +14,17 @@ module.exports = (sequelize, DataTypes) => {
 
             Exam.hasMany(models.ExamQuestions,{
                 as: "questions",
-                foreignKey: 'exam_id'
+                foreignKey: 'exam_id',
+                foreignKeyConstraint: true,
             })
+
+
+            Exam.hasMany(models.ExamRatings,{
+                as: "ratings",
+                foreignKey: 'exam_id',
+                foreignKeyConstraint: true,
+            })
+
 
             Exam.belongsTo(models.SetMaster, {
                 as: 'grade',

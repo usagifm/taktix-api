@@ -43,6 +43,14 @@ const routes = (app) => {
     app.post('/student/exam/:exam_id/assign', checkToken , ExamController.assignExam)
     app.get('/student/exam-pagination', checkToken , ExamController.getUserExamsPagination)
     app.get('/student/exam', checkToken , ExamController.getUserExams)
+    app.post('/student/exam/:exam_id/start', checkToken , ExamController.startExam)
+    app.post('/student/exam/:exam_id/finish', checkToken , ExamController.finishExam)
+    app.post('/student/exam/:exam_id/answer/insert', checkToken, validator.validateInsertAnswerExamQuestion , ExamController.insertAnswerExamQuestion)
+    app.patch('/student/exam/:exam_id/answer/update', checkToken, validator.validateUpdateAnswerExamQuestion , ExamController.updateAnswerExamQuestion)
+    app.delete('/student/exam/:exam_id/answer/delete', checkToken, validator.validateDeleteAnswerExamQuestion , ExamController.deleteAnswerExamQuestion)
+    app.get('/student/exam/:exam_id/attemption/:attemption_id', checkToken, ExamController.getExamAttemptionDetail)
+    app.post('/student/exam/:exam_id/rate', checkToken, validator.validateRateExam ,ExamController.rateExam)
+    app.get('/student/exam/:exam_id/check-if-ever-rate', checkToken,ExamController.checkEverRateExam)
     
 }
 
