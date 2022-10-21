@@ -1,5 +1,38 @@
 const { check, body } = require('express-validator')
-// import { User } from '../db/models'
+
+exports.validateCheckUsername = [
+    check('name')
+        .exists()
+        .withMessage('Nama wajib di isi')
+        .notEmpty()
+        .withMessage('Nama tidak boleh kosong'),
+
+    check('username')
+        .exists()
+        .withMessage('Username wajib di isi')
+        .notEmpty()
+        .withMessage('Username tidak boleh kosong'),
+]
+
+exports.validateCheckEmailAndPhone = [
+  
+    check('email')
+        .exists()
+        .withMessage('Email wajib di isi')
+        .notEmpty()
+        .withMessage('Email tidak boleh kosong')
+        .isEmail()
+        .withMessage('Format email salah'),
+
+    check('phone_number')
+        .exists()
+        .withMessage('Nomor HP wajib di isi')
+        .notEmpty()
+        .withMessage('Nomor HP tidak boleh kosong')
+        .isMobilePhone()
+        .withMessage('Nomor HP tidak valid'),
+
+]
 
 exports.validateRegisterUser = [
     check('name')
@@ -148,8 +181,7 @@ exports.validateEditProfile = [
 ]
 
 
-
-
+// EXAMS
 exports.validateGetExams = [
     check('per_page')
         .exists()
@@ -232,8 +264,6 @@ exports.validateUpdateAnswerExamQuestion = [
 
 ]
 
-
-
 exports.validateDeleteAnswerExamQuestion = [
     check('answer_id')
         .exists()
@@ -254,6 +284,7 @@ exports.validateDeleteAnswerExamQuestion = [
         .withMessage('Question Id tidak boleh kosong'),
 
 ]
+
 
 exports.validateRateExam = [
     check('rate')

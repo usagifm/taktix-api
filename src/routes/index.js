@@ -17,6 +17,10 @@ const routes = (app) => {
       })
     app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
 
+    // Register validation
+    app.post('/register/validation/1', validator.validateCheckUsername, AuthController.checkUsername)
+    app.post('/register/validation/2', validator.validateCheckEmailAndPhone, AuthController.checkEmailAndPhone)
+
     // User Regular Auth
     app.post('/register', validator.validateRegisterUser, AuthController.register)
     app.post('/login', validator.validateLoginUser, AuthController.login)
