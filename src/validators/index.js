@@ -160,3 +160,105 @@ exports.validateGetExams = [
         .withMessage('Masukan jumlah per page data dalam query parameter'),
   
 ]
+
+exports.validateInsertAnswerExamQuestion = [
+    check('answer')
+        .exists()
+        .withMessage('Answer wajib di isi')
+        .notEmpty()
+        .withMessage('Answer tidak boleh kosong'),
+
+    check('attemption_id')
+        .exists()
+        .withMessage('Attemption Id wajib di isi')
+        .notEmpty()
+        .withMessage('attemption_id tidak boleh kosong'),
+
+    check('question_id')
+        .exists()
+        .withMessage('Question Id wajib di isi')
+        .notEmpty()
+        .withMessage('Question Id tidak boleh kosong'),
+
+]
+
+exports.validateInsertAnswerExamQuestion = [
+    check('answer')
+        .exists()
+        .withMessage('Answer wajib di isi')
+        .notEmpty()
+        .withMessage('Answer tidak boleh kosong'),
+
+    check('attemption_id')
+        .exists()
+        .withMessage('Attemption Id wajib di isi')
+        .notEmpty()
+        .withMessage('attemption_id tidak boleh kosong'),
+
+    check('question_id')
+        .exists()
+        .withMessage('Question Id wajib di isi')
+        .notEmpty()
+        .withMessage('Question Id tidak boleh kosong'),
+
+]
+
+
+
+exports.validateUpdateAnswerExamQuestion = [
+    check('answer_id')
+        .exists()
+        .withMessage('Answer Id wajib di isi')
+        .notEmpty()
+        .withMessage('Answer Id tidak boleh kosong'),
+
+    check('answer')
+        .exists()
+        .withMessage('Answer wajib di isi')
+        .notEmpty()
+        .withMessage('Answer tidak boleh kosong'),
+
+    check('attemption_id')
+        .exists()
+        .withMessage('Attemption Id wajib di isi')
+        .notEmpty()
+        .withMessage('attemption_id tidak boleh kosong'),
+
+    check('question_id')
+        .exists()
+        .withMessage('Question Id wajib di isi')
+        .notEmpty()
+        .withMessage('Question Id tidak boleh kosong'),
+
+]
+
+
+
+exports.validateDeleteAnswerExamQuestion = [
+    check('answer_id')
+        .exists()
+        .withMessage('Answer Id wajib di isi')
+        .notEmpty()
+        .withMessage('Answer Id tidak boleh kosong'),
+
+    check('attemption_id')
+        .exists()
+        .withMessage('Attemption Id wajib di isi')
+        .notEmpty()
+        .withMessage('attemption_id tidak boleh kosong'),
+
+    check('question_id')
+        .exists()
+        .withMessage('Question Id wajib di isi')
+        .notEmpty()
+        .withMessage('Question Id tidak boleh kosong'),
+
+]
+
+exports.validateRateExam = [
+    check('rate')
+        .exists()
+        .withMessage('Answer Id wajib di isi')
+        .notEmpty()
+        .withMessage('Answer Id tidak boleh kosong'),
+]
