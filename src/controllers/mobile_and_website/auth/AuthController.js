@@ -94,6 +94,17 @@ const AuthController = {
         } catch (error) {
             console.log(error)
 
+
+        try {
+            const user = await User.findOne({
+                include: [
+                    { model: SetMaster, as: 'role'},
+                ],
+                where: { [Op.or]: [
+                { email: email },
+                { username: email }
+              ] } })
+
             let errStacks = {}
 
             if (error.errors) {

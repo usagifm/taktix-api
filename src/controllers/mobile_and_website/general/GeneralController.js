@@ -1,5 +1,6 @@
 import { errorResponse, errorMapper } from './../../../helpers/errorResponse'
 import cloudinary from './../../../helpers/cloudinary'
+import {SetMaster} from './../../../db/models'
 import DatauriParser from "datauri/parser";
 const parser = new DatauriParser();
 import path from 'path';
@@ -46,6 +47,38 @@ const GeneralController = {
 
        }
     },
+
+    async getSetMasters(req, res, next) {
+
+        if (!req.query.category || req.query.category =="" ){
+            return errorResponse(res, 400, 'Masukan kategori set master', [])
+        }
+
+        try {
+            const setMaster = await SetMaster.findAll({
+                
+                where: {
+                    category: req.query.category,
+                },
+            })
+
+            if (setMaster.length > 0) {
+                return res.status(200).send(setMaster)
+            } else {
+                return errorResponse(res, 400, 'Data set master untuk kategori '+ req.query.category +" tidak ditemukan", [])
+            }
+        } catch (error) {
+            console.log(error)
+
+            let errStacks = []
+
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
+        }
+    }
 }
+
 
 export default GeneralController

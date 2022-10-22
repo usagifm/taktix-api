@@ -42,7 +42,31 @@ module.exports = {
         allowNull: true,
         type: Sequelize.DATE,
     },
-    });
+    }).then(() => {
+      return queryInterface.sequelize.query(`
+      CREATE TRIGGER exam_ratings_after_insert AFTER INSERT ON exam_ratings
+      FOR EACH ROW BEGIN
+
+      UPDATE exams
+      SET rating = (SELECT AVG(rate) FROM exam_ratings
+                           WHERE exams.id = exam_ratings.exam_id)
+      WHERE exams.id = NEW.exam_id;
+      
+     END
+      `)
+  }).then(() => {
+    return queryInterface.sequelize.query(`
+    CREATE TRIGGER exam_ratings_after_delete AFTER DELETE ON exam_ratings
+    FOR EACH ROW BEGIN
+
+    UPDATE exams
+    SET rating = (SELECT AVG(rate) FROM exam_ratings
+                         WHERE exams.id = exam_ratings.exam_id)
+    WHERE exams.id = NEW.exam_id;
+    
+   END
+    `)
+});
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('ExamRatings');

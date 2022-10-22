@@ -16,6 +16,7 @@ const routes = (app) => {
         res.sendFile('welcome.html', {root: __dirname })
       })
     app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
+    app.get('/set-masters', checkToken, GeneralController.getSetMasters)
 
     // Register validation
     app.post('/register/validation/1', validator.validateCheckUsername, AuthController.checkUsername)

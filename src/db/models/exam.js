@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
             Exam.hasMany(models.ExamRatings,{
                 as: "ratings",
                 foreignKey: 'exam_id',
-                foreignKeyConstraint: true,
             })
 
 

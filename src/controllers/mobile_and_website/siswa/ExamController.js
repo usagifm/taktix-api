@@ -2,7 +2,7 @@ import { errorResponse, errorMapper } from '../../../helpers/errorResponse'
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 
-import { User,Exam,ExamEnrollments,ExamQuestions,ExamAttemptions,ExamAttemptionsAnswers,ExamRatings } from '../../../db/models'
+import { User,Exam,ExamEnrollments,ExamQuestions,ExamAttemptions,ExamAttemptionsAnswers,ExamRatings,SetMaster } from '../../../db/models'
 import { pagination } from '../../../helpers/pagination';
 import { body, validationResult } from 'express-validator'
 import examratings from '../../../db/models/examratings';
@@ -15,16 +15,21 @@ const ExamController = {
             const where = {};
             const page = req.query.page ? parseInt(req.query.page) : 1;
             const per_page = req.query.page ? parseInt(req.query.per_page) : 1;
-            const {exam_category_id, title} = req.query;
+            const {exam_category_id, title,category_id} = req.query;
             if (exam_category_id) where.exam_category_id = { [Op.eq]: exam_category_id}
+            if (category_id) where.category_id = { [Op.eq]: category_id}
             if (title) where.title = { [Op.like]: `%${title}%`}
             const offset = 0 + (req.query.page - 1) * per_page
             const { count, rows } = await Exam.findAndCountAll({
+                include: [
+                    { model: SetMaster, as: 'exam_category'},
+                    { model: SetMaster, as: 'category' },
+                ],
                 // include: [{model: User}],
                 where,
                 offset: offset,
                 limit: per_page,
-                distinct: true,
+        
                 
             });
             console.log(pagination)
@@ -57,24 +62,20 @@ const ExamController = {
                     id: req.params.exam_id,
                 },
                 include: [
-                    {
-                        model: ExamRatings,
-                        as: 'ratings', 
-                       attributes: []
-                      },
-                    { model: ExamQuestions, as: 'questions' },
-                ],
-                attributes: {
-                    include: [ // this adds AVG attribute to others instead of rewriting
-                      [Sequelize.fn('AVG', Sequelize.col('ratings.rate')), 'rating'],
-                    ],
-                  },
+          
+                      { model: SetMaster, as: 'exam_category'},
+                      { model: SetMaster, as: 'category'},
+                ]
             })
 
 
             if (exam) {
 
                 var ratings = await ExamRatings.findAll({
+                    include: [
+          
+                        { model: User, as: 'user',attributes:['name','photo_profile','gender']},
+                  ],
                     where: {
                         exam_id: req.params.exam_id
                     },
@@ -235,7 +236,9 @@ const ExamController = {
             const page = req.query.page ? parseInt(req.query.page) : 1;
             const per_page = req.query.page ? parseInt(req.query.per_page) : 1;
             const offset = 0 + (req.query.page - 1) * per_page
-            const {title} = req.query;
+            const {exam_category_id, title,category_id} = req.query;
+            if (exam_category_id) where.exam_category_id = { [Op.eq]: exam_category_id}
+            if (category_id) where.category_id = { [Op.eq]: category_id}
             if (title) where.title = { [Op.like]: `%${title}%`}
           
 
@@ -247,6 +250,10 @@ const ExamController = {
 
                 where.id = examId
                 var { count, rows } = await Exam.findAndCountAll({
+                    include: [
+                            { model: SetMaster, as: 'exam_category'},
+                            { model: SetMaster, as: 'category'},
+                    ],
                     where,
                     offset: offset,
                     limit: per_page,
@@ -291,7 +298,11 @@ const ExamController = {
 
             const user = await User.findOne({
                 include: [
-                    { model: Exam, as: 'user_exams',order: [['created_at', 'DESC']], },
+                    { model: Exam, as: 'user_exams',order: [['created_at', 'DESC']],include: [
+          
+                        { model: SetMaster, as: 'exam_category'},
+                        { model: SetMaster, as: 'category'},
+                  ] },
                 ],
                 where: {
                     id: req.user.user.id,
