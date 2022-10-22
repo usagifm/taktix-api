@@ -62,7 +62,7 @@ module.exports = {
     UPDATE exams
     SET rating = (SELECT AVG(rate) FROM exam_ratings
                          WHERE exams.id = exam_ratings.exam_id)
-    WHERE exams.id = NEW.exam_id;
+    WHERE exams.id = OLD.exam_id;
     
    END
     `)
