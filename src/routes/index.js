@@ -12,10 +12,15 @@ import ExamController from '../controllers/mobile_and_website/siswa/ExamControll
 const routes = (app) => {   
     // GENERAL
     app.get('/',(req, res) => {
-        res.send('Welcome to Taktix API Server, Server is okay!')
+        // res.send('Welcome to Taktix API Server, Server is okay!')
+        res.sendFile('welcome.html', {root: __dirname })
       })
     app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
     app.get('/set-masters', checkToken, GeneralController.getSetMasters)
+
+    // Register validation
+    app.post('/register/validation/1', validator.validateCheckUsername, AuthController.checkUsername)
+    app.post('/register/validation/2', validator.validateCheckEmailAndPhone, AuthController.checkEmailAndPhone)
 
     // User Regular Auth
     app.post('/register', validator.validateRegisterUser, AuthController.register)

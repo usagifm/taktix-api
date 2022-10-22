@@ -44,8 +44,7 @@ const ProfileController = {
             var user_id = req.user.user.id
 
 
-            if (req.body.photo_profile == null && req.body.photo_profile == '') 
-            {
+            if (req.body.photo_profile == null && req.body.photo_profile == '') {
                 delete req.body.photo_profile
             }
 
@@ -96,27 +95,36 @@ const ProfileController = {
                 },
             })
 
-            const hashedPassword = await bcrypt.hash(
-                req.body.new_password,
-                saltRounds
-            )
-            req.body.new_password = hashedPassword
-
             if (user) {
-                delete req.body.password_confirmation
-                await User.update(
-                    {
-                        password: req.body.new_password,
-                    },
-                    {
-                        where: {
-                            id: user_id,
+
+                if (bcrypt.compareSync(req.body.old_password, user.password)) {
+                    const hashedPassword = await bcrypt.hash(
+                        req.body.new_password,
+                        saltRounds
+                    )
+                    req.body.new_password = hashedPassword
+                    delete req.body.password_confirmation
+                    delete req.body.old_password
+
+                    await User.update(
+                        {
+                            password: req.body.new_password,
                         },
-                    }
-                )
-                return res
-                    .status(200)
-                    .json({ message: 'Password Berhasil Diubah' })
+                        {
+                            where: {
+                                id: user_id,
+                            },
+                        }
+                    )
+                    return res
+                        .status(200)
+                        .json({ message: 'Password Berhasil Diubah' })
+
+                } else {
+                    return errorResponse(res, 400, 'Password Lama Salah', [])
+                }
+
+
             } else {
                 return errorResponse(res, 400, 'User Tidak Ditemukan', [])
             }
