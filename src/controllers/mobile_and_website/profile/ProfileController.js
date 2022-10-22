@@ -1,5 +1,5 @@
 import { errorResponse, errorMapper } from '../../../helpers/errorResponse'
-import { User } from '../../../db/models'
+import { User,SetMaster } from '../../../db/models'
 import { validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
 const saltRounds = 10
@@ -11,6 +11,9 @@ const ProfileController = {
             var user_id = req.user.user.id
 
             const user = await User.findOne({
+                include: [
+                    { model: SetMaster, as: 'role'},
+                ],
                 where: {
                     id: user_id,
                 },

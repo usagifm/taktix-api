@@ -26,6 +26,12 @@ module.exports = (sequelize, DataTypes) => {
              name: 'user_id'
            }
           });
+
+          User.belongsTo(models.SetMaster, {
+            as: 'role',
+            foreignKey: 'role_id',
+            foreignKeyConstraint: true,
+        })
         }
 
         

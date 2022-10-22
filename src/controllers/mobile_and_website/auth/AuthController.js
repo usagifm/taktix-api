@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { errorResponse,errorMapper } from '../../../helpers/errorResponse'
-import { User, VerificationToken } from '../../../db/models'
+import { User, VerificationToken,SetMaster } from '../../../db/models'
 const { Op } = require("sequelize");
 import {
     sendEmailVerification,
@@ -83,7 +83,11 @@ const AuthController = {
         const { email, password } = req.body
 
         try {
-            const user = await User.findOne({where: { [Op.or]: [
+            const user = await User.findOne({
+                include: [
+                    { model: SetMaster, as: 'role'},
+                ],
+                where: { [Op.or]: [
                 { email: email },
                 { username: email }
               ] } })

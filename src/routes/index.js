@@ -15,6 +15,7 @@ const routes = (app) => {
         res.send('Welcome to Taktix API Server, Server is okay!')
       })
     app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
+    app.get('/set-masters', checkToken, GeneralController.getSetMasters)
 
     // User Regular Auth
     app.post('/register', validator.validateRegisterUser, AuthController.register)
