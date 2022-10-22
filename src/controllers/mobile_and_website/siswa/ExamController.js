@@ -5,8 +5,6 @@ const Op = Sequelize.Op
 import { User,Exam,ExamEnrollments,ExamQuestions,ExamAttemptions,ExamAttemptionsAnswers,ExamRatings,SetMaster } from '../../../db/models'
 import { pagination } from '../../../helpers/pagination';
 import { body, validationResult } from 'express-validator'
-import examratings from '../../../db/models/examratings';
-import user from '../../../db/models/user';
 
 const ExamController = {
     async getExams(req, res, next) {

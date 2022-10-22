@@ -145,6 +145,65 @@ const AuthController = {
         }
     },
 
+        // REGISTER VERIFICATION
+        async checkUsername(req, res, next) {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+
+                return errorResponse(res, 400, 'Validation error', errors.array())
+            }
+            try {
+                const user = await User.findOne({
+                    where: {
+                        username: req.body.username
+                    },
+                })
+                if(user){
+                    return errorResponse(res, 400, 'Username Sudah Digunakan', [])
+                } else {
+                    return res.status(200).json({message: "OK"})
+                }
+    
+            } catch (error) {
+                console.log(error)
+                let errStacks = {}
+
+                if (error.errors) {
+                    error.errors.map((er) => {
+                        errStacks[er.path] = er.message
+                    })
+                }
+                return errorResponse(res, 400, error.message, errStacks)
+            }
+        },
+
+        async checkEmailAndPhone(req, res, next) {
+            const errors = validationResult(req)
+            if (!errors.isEmpty()) {
+                return errorResponse(res, 400, 'Validation error', errors.array())
+            }
+            try {
+                const user = await User.findOne({
+                    where: {
+                        [Op.or]: [{email: req.body.email}, {phone_number: req.body.phone_number}]
+                        
+                    },
+                })
+    
+                if(user){
+                    return errorResponse(res, 400, 'Email / Nomor Telpon Sudah Digunakan', [])
+                } else {
+
+                    return res.status(200).json({message: "OK"})
+                }
+    
+            } catch (error) {
+                console.log(error)
+    
+
+            }
+        },
+
     async register(req, res, next) {
 
         const errors = validationResult(req);
