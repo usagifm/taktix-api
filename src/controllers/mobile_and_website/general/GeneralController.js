@@ -1,6 +1,6 @@
 import { errorResponse, errorMapper } from './../../../helpers/errorResponse'
 import cloudinary from './../../../helpers/cloudinary'
-import {SetMaster} from './../../../db/models'
+import {SetMaster,Province} from './../../../db/models'
 import DatauriParser from "datauri/parser";
 const parser = new DatauriParser();
 import path from 'path';
@@ -77,7 +77,28 @@ const GeneralController = {
             }
             return errorResponse(res, 400, error.message, errStacks)
         }
+    },
+    async getProvinces(req, res, next) {
+
+
+        try {
+            const provinces = await Province.findAll({
+                attributes: ['id','name']
+            })
+                return res.status(200).send(provinces)
+    
+        } catch (error) {
+            console.log(error)
+
+            let errStacks = []
+
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
+        }
     }
+
 }
 
 

@@ -17,6 +17,7 @@ const routes = (app) => {
       })
     app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
     app.get('/set-masters', checkToken, GeneralController.getSetMasters)
+    app.get('/provinces', checkToken, GeneralController.getProvinces)
 
     // Register validation
     app.post('/register/validation/1', validator.validateCheckUsername, AuthController.checkUsername)
