@@ -32,6 +32,12 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'role_id',
             foreignKeyConstraint: true,
         })
+
+        User.belongsTo(models.Province, {
+          as: 'province',
+          foreignKey: 'province_id',
+          foreignKeyConstraint: true,
+      })
         }
 
         
