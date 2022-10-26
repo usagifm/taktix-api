@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
 
-      question_type: {
+      question_type_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
