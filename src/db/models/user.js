@@ -81,9 +81,9 @@ module.exports = (sequelize, DataTypes) => {
             },
             photo_profile: {
               type: DataTypes.STRING,
-              validate:{
-                notEmpty: true
-              }
+              // validate:{
+              //   notEmpty: true
+              // }
             },
             role_id: {
               type: DataTypes.INTEGER,
