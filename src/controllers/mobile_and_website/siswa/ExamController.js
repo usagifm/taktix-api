@@ -336,6 +336,7 @@ const ExamController = {
                 }
             })
 
+            console.log("Udah sampe ini !")
             if(!examEnrollment){
                 return errorResponse(res, 400, "Anda belum mendaftar untuk mengerjakan soal", [])
             }
@@ -349,7 +350,7 @@ const ExamController = {
                 ],
                 where:{
                     exam_id: exam.id,
-                    user_id: req.user.user_id,
+                    user_id: req.user.user.id,
                     started_at:{
                         [Op.lt]: NOW,
                     },
@@ -385,7 +386,7 @@ const ExamController = {
                ],
                where:{
                    id: newExamAttemption.id,
-                   user_id: req.user.user_id
+                   user_id: req.user.user.id
                }
            })
 
@@ -763,7 +764,7 @@ const ExamController = {
             var examAttemption = await ExamAttemptions.findOne({
             where:{
                     exam_id: exam.id,
-                    user_id: req.user.user_id,
+                    user_id: req.user.user.id,
                     started_at:{
                         [Op.lt]: NOW,
                     },
@@ -819,7 +820,7 @@ const ExamController = {
                 where:{
                     exam_id: req.params.exam_id,
                     id: req.params.attemption_id,
-                    user_id: req.user.user_id
+                    user_id: req.user.user.id
                 }
             })
 
