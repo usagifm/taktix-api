@@ -592,7 +592,7 @@ const ExamController = {
 
         var isCorrect = 0
         
-        if (examQuestion.question_type == 1){
+        if (examQuestion.question_type == 6001){
 
             if(req.body.answer == examQuestion.answer){
                 isCorrect = 1
