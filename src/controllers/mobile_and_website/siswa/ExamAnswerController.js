@@ -33,10 +33,14 @@ const ExamAnswerController = {
                 }
             })
 
+            console.log("Check point 1")
+
             if(!examEnrollment){
                 return errorResponse(res, 400, "Anda belum mendaftar untuk mengerjakan soal", [])
             }
         
+
+            console.log("Check point 2")
 
             var examAttemption = await ExamAttemptions.findOne({
                 where:{
@@ -55,8 +59,12 @@ const ExamAnswerController = {
 
        })
  
+       console.log("Check point 3")
+
        if(examAttemption){
 
+
+        console.log("Check point 4")
         var isAnswered = await ExamAttemptionsAnswers.findOne({
             where:{
                 attemption_id: req.body.attemption_id,
@@ -69,6 +77,8 @@ const ExamAnswerController = {
             return errorResponse(res, 400, "Pertanyaan sudah pernah dijawab", [])
         }
 
+
+        console.log("Check point 5")
         var examQuestion = await ExamQuestions.findOne({
             where: {
                 id: req.body.question_id,
@@ -76,12 +86,17 @@ const ExamAnswerController = {
             }
         })
 
+
+        console.log("Check point 6")
+
         if(!examQuestion) {
             return errorResponse(res, 400, "Pertanyaan tidak ditemukan", [])
         }
 
         var isCorrect = 0
         var isCorrected = 0
+
+        console.log("Check point 7")
 
         if (examQuestion.question_type == 6001){
 
@@ -100,9 +115,12 @@ const ExamAnswerController = {
                 is_corrected: isCorrected
             })
 
+            console.log("Check point 7")
             return res.status(200).send({message: "Pertanyaan berhasil dijawab"})
         }
         
+
+        console.log("Check point 8")
        }else {
 
         return errorResponse(res, 400, "Attemtion sudah tidak aktif atau tidak ditemukan", [])
