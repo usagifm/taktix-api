@@ -8,6 +8,7 @@ import validator from '../validators'
 require('../services/google')
 import {upload} from './../helpers/multer'
 import ExamController from '../controllers/mobile_and_website/siswa/ExamController'
+import ExamAnswerController from '../controllers/mobile_and_website/siswa/ExamAnswerController'
 
 const routes = (app) => {   
     // GENERAL
@@ -52,12 +53,12 @@ const routes = (app) => {
     app.get('/student/exam', checkToken , ExamController.getUserExams)
     app.post('/student/exam/:exam_id/start', checkToken , ExamController.startExam)
     app.post('/student/exam/:exam_id/finish', checkToken , ExamController.finishExam)
-    app.post('/student/exam/:exam_id/answer/insert', checkToken, validator.validateInsertAnswerExamQuestion , ExamController.insertAnswerExamQuestion)
-    app.patch('/student/exam/:exam_id/answer/update', checkToken, validator.validateUpdateAnswerExamQuestion , ExamController.updateAnswerExamQuestion)
-    app.delete('/student/exam/:exam_id/answer/delete', checkToken, validator.validateDeleteAnswerExamQuestion , ExamController.deleteAnswerExamQuestion)
-    app.get('/student/exam/:exam_id/attemption/:attemption_id', checkToken, ExamController.getExamAttemptionDetail)
-    app.post('/student/exam/:exam_id/rate', checkToken, validator.validateRateExam ,ExamController.rateExam)
-    app.get('/student/exam/:exam_id/check-if-ever-rate', checkToken,ExamController.checkEverRateExam)
+    app.post('/student/exam/:exam_id/answer/insert', checkToken, validator.validateInsertAnswerExamQuestion , ExamAnswerController.insertAnswerExamQuestion)
+    app.patch('/student/exam/:exam_id/answer/update', checkToken, validator.validateUpdateAnswerExamQuestion , ExamAnswerController.updateAnswerExamQuestion)
+    app.delete('/student/exam/:exam_id/answer/delete', checkToken, validator.validateDeleteAnswerExamQuestion , ExamAnswerController.deleteAnswerExamQuestion)
+    app.get('/student/exam/:exam_id/attemption/:attemption_id', checkToken, ExamAnswerController.getExamAttemptionDetail)
+    app.post('/student/exam/:exam_id/rate', checkToken, validator.validateRateExam ,ExamAnswerController.rateExam)
+    app.get('/student/exam/:exam_id/check-if-ever-rate', checkToken,ExamAnswerController.checkEverRateExam)
     
 }
 
