@@ -98,7 +98,7 @@ const ExamAnswerController = {
 
         console.log("Check point 7")
 
-        if (examQuestion.question_type == 6001){
+        if (examQuestion.question_type_id == 6001){
 
             if(req.body.answer == examQuestion.answer){
                 isCorrect = 1
@@ -214,7 +214,7 @@ const ExamAnswerController = {
 
         var isCorrect = 0
         
-        if (examQuestion.question_type == 6001){
+        if (examQuestion.question_type_id == 6001){
 
             if(req.body.answer == examQuestion.answer){
                 isCorrect = 1
