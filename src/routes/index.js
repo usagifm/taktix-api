@@ -59,6 +59,8 @@ const routes = (app) => {
     app.get('/student/exam/:exam_id/attemption/:attemption_id', checkToken, ExamAnswerController.getExamAttemptionDetail)
     app.post('/student/exam/:exam_id/rate', checkToken, validator.validateRateExam ,ExamAnswerController.rateExam)
     app.get('/student/exam/:exam_id/check-if-ever-rate', checkToken,ExamAnswerController.checkEverRateExam)
+
+    app.get('/exam-recommendation', checkToken , ExamController.getExamRecommendation)
     
 }
 

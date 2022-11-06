@@ -972,6 +972,37 @@ const ExamController = {
             return errorResponse(res, 400, error.message, errStacks)
         }
 
+    },
+
+    async getExamRecommendation(req, res,next) {
+
+
+        try {
+            const limit = req.query.limit ? parseInt(req.query.limit) : 5;
+            const examsRecommendations = await Exam.findAll({
+                include: [
+                    { model: SetMaster, as: 'exam_category'},
+                    { model: SetMaster, as: 'category' },
+                ],
+                order: [['rating', 'DESC']],
+                limit: limit,
+    
+            });
+ 
+
+
+             return res.status(200).send(examsRecommendations)
+
+        } catch (error) {
+            console.log(error)
+            let errStacks = []
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
+        }
+
+
     }
 
 
