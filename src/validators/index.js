@@ -15,7 +15,6 @@ exports.validateCheckUsername = [
 ]
 
 exports.validateCheckEmailAndPhone = [
-  
     check('email')
         .exists()
         .withMessage('Email wajib di isi')
@@ -31,7 +30,6 @@ exports.validateCheckEmailAndPhone = [
         .withMessage('Nomor HP tidak boleh kosong')
         .isMobilePhone()
         .withMessage('Nomor HP tidak valid'),
-
 ]
 
 exports.validateRegisterUser = [
@@ -113,7 +111,6 @@ exports.validateLoginUser = [
 ]
 
 exports.validateEditPassword = [
-
     check('old_password')
         .exists()
         .withMessage('Password lama wajib di isi')
@@ -180,7 +177,6 @@ exports.validateEditProfile = [
         .withMessage('Format email salah'),
 ]
 
-
 // EXAMS
 exports.validateGetExams = [
     check('per_page')
@@ -190,7 +186,6 @@ exports.validateGetExams = [
     check('per_page')
         .exists()
         .withMessage('Masukan jumlah per page data dalam query parameter'),
-  
 ]
 
 exports.validateInsertAnswerExamQuestion = [
@@ -211,7 +206,6 @@ exports.validateInsertAnswerExamQuestion = [
         .withMessage('Question Id wajib di isi')
         .notEmpty()
         .withMessage('Question Id tidak boleh kosong'),
-
 ]
 
 exports.validateInsertAnswerExamQuestion = [
@@ -232,10 +226,7 @@ exports.validateInsertAnswerExamQuestion = [
         .withMessage('Question Id wajib di isi')
         .notEmpty()
         .withMessage('Question Id tidak boleh kosong'),
-
 ]
-
-
 
 exports.validateUpdateAnswerExamQuestion = [
     check('answer_id')
@@ -261,7 +252,6 @@ exports.validateUpdateAnswerExamQuestion = [
         .withMessage('Question Id wajib di isi')
         .notEmpty()
         .withMessage('Question Id tidak boleh kosong'),
-
 ]
 
 exports.validateDeleteAnswerExamQuestion = [
@@ -282,9 +272,7 @@ exports.validateDeleteAnswerExamQuestion = [
         .withMessage('Question Id wajib di isi')
         .notEmpty()
         .withMessage('Question Id tidak boleh kosong'),
-
 ]
-
 
 exports.validateRateExam = [
     check('rate')
@@ -292,4 +280,31 @@ exports.validateRateExam = [
         .withMessage('Answer Id wajib di isi')
         .notEmpty()
         .withMessage('Answer Id tidak boleh kosong'),
+]
+
+// CLASS
+exports.validateCreateClass = [
+    check('class_name')
+        .exists()
+        .withMessage('Nama kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Nama kelas tidak boleh kosong'),
+
+    check('subject_id')
+        .exists()
+        .withMessage('Nama kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Nama kelas tidak boleh kosong'),
+
+    check('grade_id')
+        .exists()
+        .withMessage('Nama kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Nama kelas tidak boleh kosong'),
+
+    check('limit')
+        .exists()
+        .withMessage('Nama kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Nama kelas tidak boleh kosong'),
 ]

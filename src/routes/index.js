@@ -9,6 +9,7 @@ require('../services/google')
 import {upload} from './../helpers/multer'
 import ExamController from '../controllers/mobile_and_website/siswa/ExamController'
 import ExamAnswerController from '../controllers/mobile_and_website/siswa/ExamAnswerController'
+import ClassController from '../controllers/mobile_and_website/tutor/ClassController'
 
 const routes = (app) => {   
     // GENERAL
@@ -59,8 +60,11 @@ const routes = (app) => {
     app.get('/student/exam/:exam_id/attemption/:attemption_id', checkToken, ExamAnswerController.getExamAttemptionDetail)
     app.post('/student/exam/:exam_id/rate', checkToken, validator.validateRateExam ,ExamAnswerController.rateExam)
     app.get('/student/exam/:exam_id/check-if-ever-rate', checkToken,ExamAnswerController.checkEverRateExam)
-
     app.get('/exam-recommendation', checkToken , ExamController.getExamRecommendation)
+
+    // User Tutor
+    app.get('/classes', checkToken , ClassController.getClass)
+    app.post('/classes', checkToken , validator.validateCreateClass, ClassController.createClass)
     
 }
 
