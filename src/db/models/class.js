@@ -9,6 +9,28 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+
+            Class.belongsTo(models.SetMaster, {
+                as: 'grade',
+                foreignKey: 'grade_id',
+            })
+
+            Class.belongsTo(models.SetMaster, {
+                as: 'subject',
+                foreignKey: 'subject_id',
+            })
+
+            Class.belongsTo(models.Lks, {
+                as: 'lks',
+                foreignKey: 'lks_id',
+            })
+
+            Class.belongsToMany(models.User, {
+                as:"class_members" ,
+                unique: false,
+                foreignKey: 'class_id',
+                through: models.ClassMember,
+              });
         }
     }
     Class.init(

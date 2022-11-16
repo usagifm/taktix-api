@@ -9,32 +9,34 @@ module.exports = {
                 type: Sequelize.INTEGER,
             },
             class_name: {
-                type: DataTypes.STRING,
+
+                type: Sequelize.STRING,
                 allowNull: false,
             },
             lks_id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
             },
             subject_id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
             },
             grade_id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
             },
             limit: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
             },
             creator_id: {
-                type: DataTypes.INTEGER,
+                type: Sequelize.INTEGER,
                 allowNull: false,
             },
             enroll_code: {
-                type: DataTypes.STRING,
+                type: Sequelize.STRING,
                 allowNull: false,
                 unique: true,
             },
             member_total: {
-                type: DataTypes.INTEGER,
+
+                type: Sequelize.INTEGER,
                 defaultValue: 0,
             },
             created_at: {

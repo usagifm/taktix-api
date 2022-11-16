@@ -9,7 +9,10 @@ require('../services/google')
 import {upload} from './../helpers/multer'
 import ExamController from '../controllers/mobile_and_website/siswa/ExamController'
 import ExamAnswerController from '../controllers/mobile_and_website/siswa/ExamAnswerController'
-import ClassController from '../controllers/mobile_and_website/tutor/ClassController'
+import TutorClassController from '../controllers/mobile_and_website/tutor/TutorClassController'
+import TutorLksController from '../controllers/mobile_and_website/tutor/TutorLksController'
+import UserClassController from '../controllers/mobile_and_website/siswa/UserClassController'
+
 
 const routes = (app) => {   
     // GENERAL
@@ -62,9 +65,33 @@ const routes = (app) => {
     app.get('/student/exam/:exam_id/check-if-ever-rate', checkToken,ExamAnswerController.checkEverRateExam)
     app.get('/exam-recommendation', checkToken , ExamController.getExamRecommendation)
 
-    // User Tutor
-    app.get('/classes', checkToken , ClassController.getClass)
-    app.post('/classes', checkToken , validator.validateCreateClass, ClassController.createClass)
+    // User Siswa Class
+
+
+    // User Tutor 
+    app.post('/student/class-enroll', checkToken, validator.validateEnrollUserToClass ,UserClassController.enrollToClass)
+    app.get('/student/class', checkToken ,UserClassController.enrolledClass)
+    app.get('/student/class/:class_id', checkToken ,UserClassController.getClassById)
+    app.delete('/student/class/:class_id/unenroll', checkToken ,UserClassController.unenrollFromClass)
+
+    // User Tutor Class
+    app.post('/tutor/class', checkToken , validator.validateCreateClass ,TutorClassController.createClass)
+    app.patch('/tutor/class/:class_id', checkToken , validator.validateEditClass ,TutorClassController.editClass)
+    app.delete('/tutor/class/:class_id', checkToken  ,TutorClassController.deleteClass)
+    app.get('/tutor/class/:class_id', checkToken  ,TutorClassController.getClassById)
+    app.get('/tutor/class', checkToken,TutorClassController.getClasses)
+    app.post('/tutor/class/:class_id/set-lks/:lks_id', checkToken,TutorClassController.setLksToClass)
+
+
+    // User Tutor LKS 
+
+    app.get('/lks', checkToken, TutorLksController.getLks)
+    app.get('/tutor/lks', checkToken, TutorLksController.getTutorLks)
+    app.get('/tutor/lks-pagination', checkToken, TutorLksController.getTutorLksPagination)
+    app.post('/tutor/lks/:lks_id/buy', checkToken, TutorLksController.buyLks)
+    app.get('/tutor/lks/:lks_id', checkToken, TutorLksController.getLksById)
+    
+
     
 }
 

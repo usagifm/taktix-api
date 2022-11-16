@@ -27,6 +27,18 @@ module.exports = (sequelize, DataTypes) => {
            }
           });
 
+          User.belongsToMany(models.Lks, {
+            as:"tutor_lks" ,
+            through: models.TutorLks,
+            foreignKey: 'tutor_id'
+          });
+
+          User.belongsToMany(models.Class, {
+            as:"user_classes" ,
+            through: models.ClassMember,
+            foreignKey: 'user_id'
+          });
+
           User.belongsTo(models.SetMaster, {
             as: 'role',
             foreignKey: 'role_id',
@@ -38,6 +50,13 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'province_id',
           foreignKeyConstraint: true,
       })
+
+
+      User.belongsTo(models.SetMaster, {
+        as: 'gender_type',
+        foreignKey: 'gender',
+    })
+
         }
 
         
