@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('exam_attemptions', {
+    await queryInterface.createTable('lks_exam_attemptions', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,7 +14,12 @@ module.exports = {
         allowNull: false,
       },
   
-      exam_id: {
+      lks_content_exam_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+
+      class_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
@@ -66,13 +71,13 @@ module.exports = {
     }).then(() => {
       return queryInterface.sequelize.query(`
     
-      CREATE TRIGGER exam_attemptions_before_insert BEFORE INSERT ON exam_attemptions
+      CREATE TRIGGER lks_exam_attemptions_before_insert BEFORE INSERT ON lks_exam_attemptions
       FOR EACH ROW BEGIN
         DECLARE total_question int DEFAULT 0;
         SET total_question = (
             SELECT COUNT(id) as count
             FROM exam_questions as e
-            WHERE e.exam_id=new.exam_id
+            WHERE e.lks_content_exam_id=new.lks_content_exam_id
             );
         SET new.total_empty = total_question;
         END;
@@ -82,6 +87,6 @@ module.exports = {
 
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('exam_attemptions');
+    await queryInterface.dropTable('lks_exam_attemptions');
   }
 };

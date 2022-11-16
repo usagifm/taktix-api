@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('exam_attemptions_answers', {
+    await queryInterface.createTable('lks_exam_attemptions_answers', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,11 +9,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       
-      attemption_id: {
+      lks_attemption_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
   
+
+      class_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+
       question_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -53,96 +59,96 @@ module.exports = {
 
     }).then(() => {
       return queryInterface.sequelize.query(`
-      CREATE TRIGGER exam_attemptions_answer_after_insert AFTER INSERT ON exam_attemptions_answers
+      CREATE TRIGGER lks_exam_attemptions_answer_after_insert AFTER INSERT ON lks_exam_attemptions_answers
       FOR EACH ROW BEGIN
      
      IF(new.is_correct > 0) THEN
-           UPDATE exam_attemptions as attempt 
+           UPDATE lks_exam_attemptions as attempt 
              SET 
              attempt.total_correct=(attempt.total_correct+1),
              attempt.total_empty=(attempt.total_empty-1)
              WHERE
-             attempt.id=new.attemption_id;
+             attempt.id=new.lks_attemption_id;
      ELSE
-           UPDATE exam_attemptions as attempt 
+           UPDATE lks_exam_attemptions as attempt 
              SET 
              attempt.total_incorrect=(attempt.total_incorrect+1),
              attempt.total_empty=(attempt.total_empty-1)
              WHERE
-             attempt.id=new.attemption_id;
+             attempt.id=new.lks_attemption_id;
      END IF;
      
-     UPDATE exam_attemptions as attempt 
+     UPDATE lks_exam_attemptions as attempt 
        SET 
        attempt.score=((attempt.total_correct/(attempt.total_correct+attempt.total_incorrect+attempt.total_empty))*100)
          WHERE
-         attempt.id=new.attemption_id;
+         attempt.id=new.lks_attemption_id;
      
      END
       `)
   }).then(() => {
     return queryInterface.sequelize.query(`
-    CREATE TRIGGER exam_attemptions_answer_after_delete AFTER DELETE ON exam_attemptions_answers
+    CREATE TRIGGER lks_exam_attemptions_answer_after_delete AFTER DELETE ON lks_exam_attemptions_answers
     FOR EACH ROW BEGIN
    
    IF(old.is_correct > 0) THEN
-         UPDATE exam_attemptions as attempt 
+         UPDATE lks_exam_attemptions as attempt 
            SET 
            attempt.total_correct=(attempt.total_correct-1),
            attempt.total_empty=(attempt.total_empty+1)
            WHERE
-           attempt.id=old.attemption_id;
+           attempt.id=old.lks_attemption_id;
    ELSE
-         UPDATE exam_attemptions as attempt 
+         UPDATE lks_exam_attemptions as attempt 
            SET 
            attempt.total_incorrect=(attempt.total_incorrect-1),
            attempt.total_empty=(attempt.total_empty+1)
            WHERE
-           attempt.id=old.attemption_id;
+           attempt.id=old.lks_attemption_id;
    END IF;
    
-   UPDATE exam_attemptions as attempt 
+   UPDATE lks_exam_attemptions as attempt 
      SET 
            attempt.score=((attempt.total_correct/(attempt.total_correct+attempt.total_incorrect+attempt.total_empty))*100)
        WHERE
-           attempt.id=old.attemption_id;
+           attempt.id=old.lks_attemption_id;
    
    END
     `)
 }).then(() => {
   return queryInterface.sequelize.query(`
 
-  CREATE TRIGGER exam_attemptions_answer_after_update AFTER UPDATE ON exam_attemptions_answers
+  CREATE TRIGGER lks_exam_attemptions_answer_after_update AFTER UPDATE ON lks_exam_attemptions_answers
   FOR EACH ROW BEGIN
  IF(new.is_correct!= old.is_correct) THEN
      IF(new.is_correct > 0) THEN
-             UPDATE exam_attemptions as attempt 
+             UPDATE lks_exam_attemptions as attempt 
              SET 
              attempt.total_correct=(attempt.total_correct+1),
              attempt.total_incorrect=(attempt.total_incorrect-1)
              WHERE
-             attempt.id=new.attemption_id;
+             attempt.id=new.lks_attemption_id;
      ELSE
-             UPDATE exam_attemptions as attempt 
+             UPDATE lks_exam_attemptions as attempt 
              SET 
              attempt.total_correct=(attempt.total_correct-1),
              attempt.total_incorrect=(attempt.total_incorrect+1)
              WHERE
-             attempt.id=new.attemption_id;
+             attempt.id=new.lks_attemption_id;
      END IF;
  END IF;
  
- UPDATE exam_attemptions as attempt 
+ UPDATE lks_exam_attemptions as attempt 
    SET 
          attempt.score=((attempt.total_correct/(attempt.total_correct+attempt.total_incorrect+attempt.total_empty))*100)
      WHERE
-         attempt.id=new.attemption_id;
+         attempt.id=new.lks_attemption_id;
  
  END
   `)
 });;
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('exam_attemptions_answers');
+    await queryInterface.dropTable('lks_exam_attemptions_answers');
   }
 };

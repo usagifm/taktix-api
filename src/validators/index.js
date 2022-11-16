@@ -293,3 +293,60 @@ exports.validateRateExam = [
         .notEmpty()
         .withMessage('Answer Id tidak boleh kosong'),
 ]
+
+
+
+exports.validateCreateClass = [
+    check('class_name')
+        .exists()
+        .withMessage('Nama kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Nama kelas tidak boleh kosong'),
+    check('subject_id')
+        .exists()
+        .withMessage('Mata pelajaran wajib di isi')
+        .notEmpty()
+        .withMessage('Mata pelajaran tidak boleh kosong'),
+    check('grade_id')
+        .exists()
+        .withMessage('Tingkat kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Tingkat kelas tidak boleh kosong'),
+    check('limit')
+        .exists()
+        .withMessage('Limit kuota kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Limit kuota kelas tidak boleh kosong'),
+        
+]
+
+exports.validateEditClass = [
+    check('class_name')
+        .exists()
+        .withMessage('Nama kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Nama kelas tidak boleh kosong'),
+    check('subject_id')
+        .exists()
+        .withMessage('Mata pelajaran wajib di isi')
+        .notEmpty()
+        .withMessage('Mata pelajaran tidak boleh kosong'),
+    check('grade_id')
+        .exists()
+        .withMessage('Tingkat kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Tingkat kelas tidak boleh kosong'),
+    check('limit')
+        .exists()
+        .withMessage('Limit kuota kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Limit kuota kelas tidak boleh kosong'),
+]
+
+exports.validateEnrollUserToClass = [
+    check('enroll_code')
+        .exists()
+        .withMessage('Kode enroll kelas wajib di isi')
+        .notEmpty()
+        .withMessage('Kode enroll kelas boleh kosong')
+]

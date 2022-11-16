@@ -70,6 +70,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('QuestionBank');
+    await queryInterface.dropTable('questions_banks');
   }
 };

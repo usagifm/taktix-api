@@ -87,6 +87,6 @@ module.exports = {
   });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('ExamQuestions');
+    await queryInterface.dropTable('exam_questions');
   }
 };
