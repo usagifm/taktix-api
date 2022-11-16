@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     sequelize,
     modelName: 'Lks',
-
+    tableName: 'lks',
     underscored: true,
     paranoid: true,
     // Custom Name
