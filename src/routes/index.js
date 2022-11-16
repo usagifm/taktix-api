@@ -13,6 +13,7 @@ import TutorClassController from '../controllers/mobile_and_website/tutor/TutorC
 import TutorLksController from '../controllers/mobile_and_website/tutor/TutorLksController'
 import UserClassController from '../controllers/mobile_and_website/siswa/UserClassController'
 
+
 const routes = (app) => {   
     // GENERAL
     app.get('/',(req, res) => {
@@ -62,7 +63,6 @@ const routes = (app) => {
     app.get('/student/exam/:exam_id/attemption/:attemption_id', checkToken, ExamAnswerController.getExamAttemptionDetail)
     app.post('/student/exam/:exam_id/rate', checkToken, validator.validateRateExam ,ExamAnswerController.rateExam)
     app.get('/student/exam/:exam_id/check-if-ever-rate', checkToken,ExamAnswerController.checkEverRateExam)
-
     app.get('/exam-recommendation', checkToken , ExamController.getExamRecommendation)
 
     // User Siswa Class
@@ -91,6 +91,7 @@ const routes = (app) => {
     app.post('/tutor/lks/:lks_id/buy', checkToken, TutorLksController.buyLks)
     app.get('/tutor/lks/:lks_id', checkToken, TutorLksController.getLksById)
     
+
     
 }
 

@@ -44,8 +44,7 @@ const ProfileController = {
             // // Get Decoded ID
             var user_id = req.user.user.id
 
-
-            if (req.body.photo_profile == null && req.body.photo_profile == '') {
+            if (req.body.photo_profile == null || req.body.photo_profile == '') {
                 delete req.body.photo_profile
             }
 

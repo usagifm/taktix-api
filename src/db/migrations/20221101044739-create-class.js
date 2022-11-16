@@ -9,6 +9,7 @@ module.exports = {
                 type: Sequelize.INTEGER,
             },
             class_name: {
+
                 type: Sequelize.STRING,
                 allowNull: false,
             },
@@ -34,6 +35,7 @@ module.exports = {
                 unique: true,
             },
             member_total: {
+
                 type: Sequelize.INTEGER,
                 defaultValue: 0,
             },
