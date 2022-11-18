@@ -68,7 +68,7 @@ const TutorLksController = {
             if (grade_id) where.grade_id = { [Op.eq]: grade_id }
             if (title) where.title = { [Op.like]: `%${title}%` }
             const offset = 0 + (req.query.page - 1) * per_page
-            const { count, rows } = await Lks.findAndCountAll({
+            var { count, rows } = await Lks.findAndCountAll({
                 include: [
                     { model: SetMaster, as: 'grade' },
                     { model: SetMaster, as: 'subject' },
@@ -80,6 +80,28 @@ const TutorLksController = {
 
 
             });
+
+            // var lkses = rows.map(function(item) {
+                
+           for(var i = 0; i < rows.length; i++){
+
+                const is_owned = await TutorLks.findOne({
+                    where:{
+                        lk_id: rows[i].id,
+                        tutor_id: req.user.user.id
+                    }
+                })
+
+                if(is_owned){ 
+                    rows[i].setDataValue('is_owned', true);
+                }else {
+                    rows[i].setDataValue('is_owned', false);
+                }
+            }
+
+
+            // });
+
             console.log(pagination)
             const result = pagination({
                 data: rows,
@@ -157,8 +179,6 @@ const TutorLksController = {
                 }
             })
 
-        
-
             const where = {};
             const page = req.query.page ? parseInt(req.query.page) : 1;
             const per_page = req.query.page ? parseInt(req.query.per_page) : 1;
@@ -189,8 +209,15 @@ const TutorLksController = {
                     distinct: true,                   
                 })
 
+                var newRows = rows.map(function(item) {
+
+                    item.setDataValue('is_owned', true);
+
+                    return item
+                });
+
                 const result = pagination({
-                    data: rows,
+                    data: newRows,
                     count,
                     page,
                     per_page
@@ -237,8 +264,23 @@ const TutorLksController = {
                 },
             })
 
-            if (tutor)
+            if (tutor){
+
+                if(tutor.tutor_lks.length > 0){
+
+                tutor.tutor_lks = tutor.tutor_lks.map(function(item) {
+
+                    item.setDataValue('is_owned', true);
+
+                    return item
+                });
+
+            }
+
                 return res.status(200).send(tutor.tutor_lks)
+            }else {
+
+            }
 
 
         } catch (error) {
