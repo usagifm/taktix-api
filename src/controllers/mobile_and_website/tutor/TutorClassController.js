@@ -38,8 +38,8 @@ const TutorClassController = {
 
 
         try {
-            await Class.create(req.body)
-            return res.status(200).json({ message: 'Kelas berhasil dibuat' })
+            const newKelas = await Class.create(req.body)
+            return res.status(200).json({ message: 'Kelas berhasil dibuat', data: newKelas })
         } catch (error) {
             console.log(error)
             let errStacks = []
