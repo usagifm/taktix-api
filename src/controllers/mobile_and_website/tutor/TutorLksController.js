@@ -2,13 +2,11 @@ import { errorResponse, errorMapper } from '../../../helpers/errorResponse'
 const Sequelize = require('sequelize');
 import { customAlphabet } from 'nanoid'
 const Op = Sequelize.Op
-
 import { Class, SetMaster,Lks,TutorLks,User,LksSection,LksContent } from '../../../db/models'
 import { pagination } from '../../../helpers/pagination';
 import { body, validationResult } from 'express-validator'
 
 const TutorLksController = {
-
 
     async buyLks(req, res, next) {
         try {
@@ -56,7 +54,6 @@ const TutorLksController = {
             return errorResponse(res, 400, error.message, errStacks)
         }
     },
-
 
     async getLks(req, res, next) {
         try {
@@ -247,7 +244,6 @@ const TutorLksController = {
         }
     },
 
-
     async getTutorLks(req, res, next) {
         try {
 
@@ -292,7 +288,6 @@ const TutorLksController = {
             return errorResponse(res, 400, error.message, errStacks)
         }
     },
-
 
     async getLksById(req, res, next) {
         try {

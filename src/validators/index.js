@@ -1,19 +1,23 @@
 const { check, body } = require('express-validator')
 
+// USERS
 exports.validateCheckUsername = [
     check('name')
         .exists()
         .withMessage('Nama wajib di isi')
         .notEmpty()
-        .withMessage('Nama tidak boleh kosong'),
+        .withMessage('Nama tidak boleh kosong')
+        .isLength({ min:5 })
+        .withMessage('Nama minimal terdiri dari 5 karakter'),
 
     check('username')
         .exists()
         .withMessage('Username wajib di isi')
         .notEmpty()
-        .withMessage('Username tidak boleh kosong'),
+        .withMessage('Username tidak boleh kosong')
+        .isLength({ min:5 })
+        .withMessage('Username minimal terdiri dari 5 karakter'),
 ]
-
 exports.validateCheckEmailAndPhone = [
     check('email')
         .exists()
@@ -29,15 +33,18 @@ exports.validateCheckEmailAndPhone = [
         .notEmpty()
         .withMessage('Nomor HP tidak boleh kosong')
         .isMobilePhone()
-        .withMessage('Nomor HP tidak valid'),
+        .withMessage('Nomor HP tidak valid')
+        .isLength({ min: 11, max: 13 })
+        .withMessage('Nomor HP minimal 11 digit dan maksimal 13 digit'),
 ]
-
 exports.validateRegisterUser = [
     check('name')
         .exists()
         .withMessage('Nama wajib di isi')
         .notEmpty()
-        .withMessage('Nama tidak boleh kosong'),
+        .withMessage('Nama tidak boleh kosong')
+        .isLength({ min:5 })
+        .withMessage('Nama minimal terdiri dari 5 karakter'),
 
     check('email')
         .exists()
@@ -51,7 +58,9 @@ exports.validateRegisterUser = [
         .exists()
         .withMessage('Username wajib di isi')
         .notEmpty()
-        .withMessage('Username tidak boleh kosong'),
+        .withMessage('Username tidak boleh kosong')
+        .isLength({ min:5 })
+        .withMessage('Username minimal terdiri dari 5 karakter'),
 
     check('phone_number')
         .exists()
@@ -59,13 +68,17 @@ exports.validateRegisterUser = [
         .notEmpty()
         .withMessage('Nomor HP tidak boleh kosong')
         .isMobilePhone()
-        .withMessage('Nomor HP tidak valid'),
+        .withMessage('Nomor HP tidak valid')
+        .isLength({ min: 11, max: 13 })
+        .withMessage('Nomor HP minimal 11 digit dan maksimal 13 digit'),
 
     check('password')
         .exists()
         .withMessage('Password wajib di isi')
         .notEmpty()
-        .withMessage('Password tidak boleh kosong'),
+        .withMessage('Password tidak boleh kosong')
+        .isLength({ min:6 })
+        .withMessage('Password minimal harus terdiri dari 6 karakter'),
 
     check('password_confirmation')
         .exists()
@@ -79,7 +92,9 @@ exports.validateRegisterUser = [
                 )
             }
             return true
-        }),
+        })
+        .isLength({ min:6 })
+        .withMessage('Password minimal harus terdiri dari 6 karakter'),
 
     check('role_id')
         .exists()
@@ -87,7 +102,6 @@ exports.validateRegisterUser = [
         .notEmpty()
         .withMessage('Role id tidak boleh kosong'),
 ]
-
 exports.validateForgot = [
     check('email')
         .exists()
@@ -95,7 +109,6 @@ exports.validateForgot = [
         .notEmpty()
         .withMessage('Email tidak boleh kosong'),
 ]
-
 exports.validateLoginUser = [
     check('email')
         .exists()
@@ -107,16 +120,18 @@ exports.validateLoginUser = [
         .exists()
         .withMessage('Password wajib di isi')
         .notEmpty()
-        .withMessage('Password tidak boleh kosong'),
+        .withMessage('Password tidak boleh kosong')
+        .isLength({ min:6 })
+        .withMessage('Password minimal harus teridiri dari 6 karakter'),
 ]
-
 exports.validateEditPassword = [
     check('old_password')
         .exists()
         .withMessage('Password lama wajib di isi')
         .notEmpty()
         .withMessage('Password lama tidak boleh kosong')
-        .isLength({ min: 6 }),
+        .isLength({ min: 6 })
+        .withMessage('Password minimal harus terdiri dari 6 karakter'),
 
     check('new_password')
         .exists()
@@ -138,21 +153,26 @@ exports.validateEditPassword = [
                 )
             }
             return true
-        }),
+        })
+        .isLength({ min: 6 })
+        .withMessage('Password minimal harus terdiri dari 6 karakter'),
 ]
-
 exports.validateEditProfile = [
     check('name')
         .exists()
         .withMessage('Nama wajib di isi')
         .notEmpty()
-        .withMessage('Nama tidak boleh kosong'),
+        .withMessage('Nama tidak boleh kosong')
+        .isLength({ min:5 })
+        .withMessage('Nama minimal terdiri dari 5 karakter'),
 
     check('username')
         .exists()
         .withMessage('Username wajib di isi')
         .notEmpty()
-        .withMessage('Username tidak boleh kosong'),
+        .withMessage('Username tidak boleh kosong')
+        .isLength({ min:5 })
+        .withMessage('Username minimal terdiri dari 5 karakter'),
 
     check('gender')
         .exists()
@@ -166,7 +186,9 @@ exports.validateEditProfile = [
         .notEmpty()
         .withMessage('Nomor HP tidak boleh kosong')
         .isMobilePhone()
-        .withMessage('Nomor HP tidak valid'),
+        .withMessage('Nomor HP tidak valid')
+        .isLength({ min: 11, max: 13 })
+        .withMessage('Nomor HP minimal 11 digit dan maksimal 13 digit'),
 
     check('email')
         .exists()
@@ -187,7 +209,6 @@ exports.validateGetExams = [
         .exists()
         .withMessage('Masukan jumlah per page data dalam query parameter'),
 ]
-
 exports.validateInsertAnswerExamQuestion = [
     check('answer')
         .exists()
@@ -207,7 +228,6 @@ exports.validateInsertAnswerExamQuestion = [
         .notEmpty()
         .withMessage('Question Id tidak boleh kosong'),
 ]
-
 exports.validateInsertAnswerExamQuestion = [
     check('answer')
         .exists()
@@ -227,7 +247,6 @@ exports.validateInsertAnswerExamQuestion = [
         .notEmpty()
         .withMessage('Question Id tidak boleh kosong'),
 ]
-
 exports.validateUpdateAnswerExamQuestion = [
     check('answer_id')
         .exists()
@@ -253,7 +272,6 @@ exports.validateUpdateAnswerExamQuestion = [
         .notEmpty()
         .withMessage('Question Id tidak boleh kosong'),
 ]
-
 exports.validateDeleteAnswerExamQuestion = [
     check('answer_id')
         .exists()
@@ -273,7 +291,6 @@ exports.validateDeleteAnswerExamQuestion = [
         .notEmpty()
         .withMessage('Question Id tidak boleh kosong'),
 ]
-
 exports.validateRateExam = [
     check('rate')
         .exists()
@@ -282,10 +299,7 @@ exports.validateRateExam = [
         .withMessage('Answer Id tidak boleh kosong'),
 ]
 
-
-
-
-
+// CLASSES
 exports.validateCreateClass = [
     check('class_name')
         .exists()
@@ -310,7 +324,6 @@ exports.validateCreateClass = [
         .withMessage('Limit kuota kelas tidak boleh kosong'),
         
 ]
-
 exports.validateEditClass = [
     check('class_name')
         .exists()
@@ -333,7 +346,6 @@ exports.validateEditClass = [
         .notEmpty()
         .withMessage('Limit kuota kelas tidak boleh kosong'),
 ]
-
 exports.validateEnrollUserToClass = [
     check('enroll_code')
         .exists()
