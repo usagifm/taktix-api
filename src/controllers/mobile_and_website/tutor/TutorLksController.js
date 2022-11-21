@@ -309,7 +309,7 @@ const TutorLksController = {
             if(is_owned){ 
                 include = {model: LksSection, as: "sections", include: {model: LksContent, as: "contents"}}
             }else {
-                include = {model: LksSection, as: "sections"}
+                include = {model: LksSection, as: "sections",  include: {model: LksContent, as: "contents",attributes: ['content_name'] }}
             }
 
             const lks = await Lks.findOne({

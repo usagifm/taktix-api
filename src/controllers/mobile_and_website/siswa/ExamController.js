@@ -978,6 +978,11 @@ const ExamController = {
 
 
         try {
+            const where = {};
+            const {category_id} = req.query;
+
+            if (category_id) where.category_id = { [Op.eq]: category_id}
+
             const limit = req.query.limit ? parseInt(req.query.limit) : 5;
             const examsRecommendations = await Exam.findAll({
                 include: [
@@ -986,6 +991,7 @@ const ExamController = {
                 ],
                 order: [['rating', 'DESC']],
                 limit: limit,
+                where
     
             });
  
