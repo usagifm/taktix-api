@@ -25,6 +25,11 @@ module.exports = (sequelize, DataTypes) => {
                 foreignKey: 'lks_id',
             })
 
+            Class.belongsTo(models.User, {
+                as: 'tutor',
+                foreignKey: 'creator_id',
+            })
+
             Class.belongsToMany(models.User, {
                 as:"class_members" ,
                 unique: false,

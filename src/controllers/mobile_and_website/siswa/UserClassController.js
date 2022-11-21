@@ -107,6 +107,7 @@ const UserClassController = {
                 include: [
                     { model: SetMaster, as: 'grade' },
                     { model: SetMaster, as: 'subject' },
+                    { model: User, as: "tutor", attributes: ['id','name','email','photo_profile']},
                     { model: Lks, as: 'lks', include: {model: LksSection, as: "sections", include: {model: LksContent, as: "contents"}}},
                     { model: User, as: "class_members", attributes: ['id','name','email','photo_profile'] , include:[{model: SetMaster, as: "gender_type"}]}
                 ],
