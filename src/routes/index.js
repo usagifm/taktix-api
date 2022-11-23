@@ -17,7 +17,6 @@ import UserClassController from '../controllers/mobile_and_website/siswa/UserCla
 const routes = (app) => {   
     // GENERAL
     app.get('/',(req, res) => {
-        // res.send('Welcome to Taktix API Server, Server is okay!')
         res.sendFile('welcome.html', {root: __dirname })
       })
     app.post('/upload', upload ,checkToken, GeneralController.uploadImage)
@@ -67,7 +66,6 @@ const routes = (app) => {
 
     // User Siswa Class
 
-
     // User Tutor 
     app.post('/student/class-enroll', checkToken, validator.validateEnrollUserToClass ,UserClassController.enrollToClass)
     app.get('/student/class', checkToken ,UserClassController.enrolledClass)
@@ -81,18 +79,16 @@ const routes = (app) => {
     app.get('/tutor/class/:class_id', checkToken  ,TutorClassController.getClassById)
     app.get('/tutor/class', checkToken,TutorClassController.getClasses)
     app.post('/tutor/class/:class_id/set-lks/:lks_id', checkToken,TutorClassController.setLksToClass)
-
+    app.delete('/tutor/class/:class_id/member/:member_id', checkToken  ,TutorClassController.deleteClassMember)
+    app.patch('/tutor/class/:class_id/lks/unset', checkToken  ,TutorClassController.unsetClassLks)
 
     // User Tutor LKS 
-
     app.get('/lks', checkToken, TutorLksController.getLks)
     app.get('/tutor/lks', checkToken, TutorLksController.getTutorLks)
     app.get('/tutor/lks-pagination', checkToken, TutorLksController.getTutorLksPagination)
     app.post('/tutor/lks/:lks_id/buy', checkToken, TutorLksController.buyLks)
     app.get('/tutor/lks/:lks_id', checkToken, TutorLksController.getLksById)
-    
 
-    
 }
 
 export default routes

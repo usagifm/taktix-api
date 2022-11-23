@@ -2,7 +2,7 @@ import { errorResponse, errorMapper } from '../../../helpers/errorResponse'
 const Sequelize = require('sequelize');
 import { customAlphabet } from 'nanoid'
 const Op = Sequelize.Op
-import { Class, SetMaster, Lks, TutorLks, LksSection,LksContent,User } from '../../../db/models'
+import { Class, SetMaster, Lks, TutorLks, LksSection, LksContent, User, ClassMember } from '../../../db/models'
 import { pagination } from '../../../helpers/pagination';
 import { body, validationResult } from 'express-validator'
 
@@ -303,6 +303,78 @@ const TutorClassController = {
             return errorResponse(res, 400, error.message, errStacks)
         }
     },
+
+    async unsetClassLks(req, res, next) {
+        try {
+            const kelas = await Class.findOne({
+                where: {
+                    id: req.params.class_id,
+                    creator_id: req.user.user.id
+                },
+            })
+
+            if (kelas) {
+                await Class.update(
+                {
+                    lks_id: null
+                },
+                {
+                    where: {
+                        id: req.params.class_id,
+                        creator_id: req.user.user.id
+                    },
+                })
+                return res
+                    .status(200)
+                    .json({ message: 'LKS berhasil dihapus dari kelas' })
+            } else {
+                return res.status(400).json({ message: 'Kelas tidak ditemukan' })
+            }
+        } catch (error) {
+            console.log(error)
+
+            let errStacks = []
+
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
+        }
+    },
+
+    async deleteClassMember(req, res, next) {
+        try {
+            const siswa = await ClassMember.findOne({
+                where: {
+                    class_id: req.params.class_id,
+                    user_id: req.params.member_id
+                },
+            })
+
+            if (siswa) {
+                await ClassMember.destroy({
+                    where: {
+                        class_id: req.params.class_id,
+                        user_id: req.params.member_id
+                    },
+                })
+                return res
+                    .status(200)
+                    .json({ message: 'Siswa berhasil dihapus dari kelas' })
+            } else {
+                return res.status(400).json({ message: 'Siswa tidak ditemukan' })
+            }
+        } catch (error) {
+            console.log(error)
+
+            let errStacks = []
+
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
+        }
+    }
 
 }
 export default TutorClassController
