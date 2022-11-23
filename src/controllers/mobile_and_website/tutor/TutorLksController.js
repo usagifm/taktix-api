@@ -57,7 +57,28 @@ const TutorLksController = {
 
     async getLks(req, res, next) {
         try {
+
+
+            var tutorLkses = await TutorLks.findAll({
+                where:{
+                    tutor_id: req.user.user.id
+                }
+            })
+
             const where = {};
+
+            if (tutorLkses.length > 0) {
+
+            var LksId = tutorLkses.map(function(item) {
+                return item['lk_id'];
+            });
+            
+            where.id = {
+                [Op.ne]: LksId
+              }
+        }
+           
+ 
             const page = req.query.page ? parseInt(req.query.page) : 1;
             const per_page = req.query.page ? parseInt(req.query.per_page) : 1;
             const { subject_id, title, grade_id } = req.query;
@@ -78,28 +99,14 @@ const TutorLksController = {
 
             });
 
-            // var lkses = rows.map(function(item) {
-                
-           for(var i = 0; i < rows.length; i++){
+            rows = rows.map(function(item) {
 
-                const is_owned = await TutorLks.findOne({
-                    where:{
-                        lk_id: rows[i].id,
-                        tutor_id: req.user.user.id
-                    }
-                })
+                    item.setDataValue('is_owned', false);
+         
+                return item
 
-                if(is_owned){ 
-                    rows[i].setDataValue('is_owned', true);
-                }else {
-                    rows[i].setDataValue('is_owned', false);
-                }
-            }
+            });
 
-
-            // });
-
-            console.log(pagination)
             const result = pagination({
                 data: rows,
                 count,

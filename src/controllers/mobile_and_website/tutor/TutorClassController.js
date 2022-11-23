@@ -227,7 +227,6 @@ const TutorClassController = {
 
                     if (is_owned) {
 
-
                         await Class.update({ lks_id: req.params.lks_id }, {
                             where: {
                                 id: req.params.class_id,

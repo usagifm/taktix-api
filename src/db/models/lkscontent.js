@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'lks_content_id',
     })
 
+    LksContent.hasOne(models.ClassMarkContent,{
+      as: "mark",
+      foreignKey: 'lks_content_id',
+    })
+
     }
   }
   LksContent.init({
