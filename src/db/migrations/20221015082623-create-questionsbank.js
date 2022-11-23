@@ -10,7 +10,7 @@ module.exports = {
       },
 
       question: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
   
@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
   
-      question_type: {
+      question_type_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

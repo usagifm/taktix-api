@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     question: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
 
@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
 
-    question_type: {
+    question_type_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },

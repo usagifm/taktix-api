@@ -64,13 +64,18 @@ const routes = (app) => {
     app.get('/student/exam/:exam_id/check-if-ever-rate', checkToken,ExamAnswerController.checkEverRateExam)
     app.get('/exam-recommendation', checkToken , ExamController.getExamRecommendation)
 
-    // User Siswa Class
+    
 
-    // User Tutor 
+    // User Siswa Class 
     app.post('/student/class-enroll', checkToken, validator.validateEnrollUserToClass ,UserClassController.enrollToClass)
     app.get('/student/class', checkToken ,UserClassController.enrolledClass)
     app.get('/student/class/:class_id', checkToken ,UserClassController.getClassById)
     app.delete('/student/class/:class_id/unenroll', checkToken ,UserClassController.unenrollFromClass)
+    
+    app.get('/student/class/:class_id/section/:section_id', checkToken ,UserClassController.getClassLksSectionDetail)
+    app.get('/student/class/:class_id/section/:section_id/content/:content_id', checkToken ,UserClassController.getClassLksContentDetail)
+    app.post('/student/class/:class_id/section/:section_id/content/:content_id/mark', checkToken ,UserClassController.markClassLksContent)
+
 
     // User Tutor Class
     app.post('/tutor/class', checkToken , validator.validateCreateClass ,TutorClassController.createClass)
