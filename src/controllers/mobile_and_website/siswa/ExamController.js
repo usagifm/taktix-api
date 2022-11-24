@@ -104,7 +104,7 @@ const ExamController = {
                             finished_at:{
                                 [Op.gt]: NOW,
                             }
-                        },attributes:{exclude: ['total_correct','total_inccorect','total_empty','score']}
+                        },attributes:{exclude: ['total_correct','total_incorrect','total_empty','score']}
                         
                     })
 
@@ -357,7 +357,7 @@ const ExamController = {
                     finished_at:{
                         [Op.gt]: NOW,
                     }
-                }
+                },attributes:{exclude: ['total_correct','total_incorrect','total_empty','score']}
             })
             
             if(examAttemption){
@@ -479,7 +479,7 @@ const ExamController = {
         var isCorrect = 0
         var isCorrected = 0
 
-        if (examQuestion.question_type == 6001){
+        if (examQuestion.question_type_id == 6001){
 
             if(req.body.answer == examQuestion.answer){
                 isCorrect = 1
@@ -496,7 +496,12 @@ const ExamController = {
                 is_corrected: isCorrected
             })
 
-            return res.status(200).send({message: "Pertanyaan berhasil dijawab"})
+
+            delete questionAnswer.dataValues.is_correct
+            delete questionAnswer.dataValues.is_corrected
+            
+
+            return res.status(200).send({message: "Pertanyaan berhasil dijawab", data: questionAnswer})
         }
         
        }else {
@@ -592,7 +597,7 @@ const ExamController = {
 
         var isCorrect = 0
         
-        if (examQuestion.question_type == 6001){
+        if (examQuestion.question_type_id == 6001){
 
             if(req.body.answer == examQuestion.answer){
                 isCorrect = 1

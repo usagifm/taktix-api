@@ -75,6 +75,13 @@ const routes = (app) => {
     app.get('/student/class/:class_id/section/:section_id', checkToken ,UserClassController.getClassLksSectionDetail)
     app.get('/student/class/:class_id/section/:section_id/content/:content_id', checkToken ,UserClassController.getClassLksContentDetail)
     app.post('/student/class/:class_id/section/:section_id/content/:content_id/mark', checkToken ,UserClassController.markClassLksContent)
+    app.post('/student/class/:class_id/section/:section_id/content/:content_id/start', checkToken ,UserClassController.startClassLksContentExam)
+    app.post('/student/class/:class_id/section/:section_id/content/:content_id/insert', checkToken, validator.validateInsertAnswerLksExamQuestion  ,UserClassController.insertAnswerLksExamQuestion)
+    app.patch('/student/class/:class_id/section/:section_id/content/:content_id/update', checkToken, validator.validateUpdateAnswerLksExamQuestion  ,UserClassController.updateAnswerLksExamQuestion)
+    app.delete('/student/class/:class_id/section/:section_id/content/:content_id/delete', checkToken, validator.validateDeleteAnswerLksExamQuestion  ,UserClassController.deleteAnswerLksExamQuestion)
+    app.post('/student/class/:class_id/section/:section_id/content/:content_id/finish', checkToken ,UserClassController.finishAnswerLksExam)
+    app.get('/student/class/:class_id/section/:section_id/content/:content_id/lks-exam-attemption/:lks_attemption_id', checkToken ,UserClassController.getLksExamAttemptionDetail)
+    
 
 
     // User Tutor Class
@@ -86,6 +93,12 @@ const routes = (app) => {
     app.post('/tutor/class/:class_id/set-lks/:lks_id', checkToken,TutorClassController.setLksToClass)
     app.delete('/tutor/class/:class_id/member/:member_id', checkToken  ,TutorClassController.deleteClassMember)
     app.patch('/tutor/class/:class_id/lks/unset', checkToken  ,TutorClassController.unsetClassLks)
+
+    app.get('/tutor/class/:class_id/section/:section_id', checkToken  ,TutorClassController.getClassLksSectionDetail)
+    app.get('/tutor/class/:class_id/section/:section_id/content/:content_id', checkToken  ,TutorClassController.getClassLksContentDetail)
+    app.get('/tutor/class/:class_id/section/:section_id/content/:content_id/lks-exam-attemption/:lks_attemption_id', checkToken  ,TutorClassController.getLksExamAttemptionDetail)
+    app.post('/tutor/class/:class_id/section/:section_id/content/:content_id/lks-exam-attemption/:lks_attemption_id/answer/:answer_id', checkToken, validator.validateCorrectedLksExamAnswer ,TutorClassController.correctedClassLksExamAnswer)
+
 
     // User Tutor LKS 
     app.get('/lks', checkToken, TutorLksController.getLks)

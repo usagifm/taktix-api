@@ -14,7 +14,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   LksExamAttemptionsAnswers.init({
-    attemption_id: {
+    lks_attemption_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    class_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -32,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
     answer: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+
+    image_answer: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
 
     is_corrected: {

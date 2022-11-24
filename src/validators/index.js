@@ -353,3 +353,78 @@ exports.validateEnrollUserToClass = [
         .notEmpty()
         .withMessage('Kode enroll kelas boleh kosong')
 ]
+
+
+exports.validateInsertAnswerLksExamQuestion = [
+    check('answer')
+        .exists()
+        .withMessage('Answer wajib di isi')
+        .notEmpty()
+        .withMessage('Answer tidak boleh kosong'),
+
+    check('lks_attemption_id')
+        .exists()
+        .withMessage('Attemption Id wajib di isi')
+        .notEmpty()
+        .withMessage('attemption_id tidak boleh kosong'),
+
+    check('question_id')
+        .exists()
+        .withMessage('Question Id wajib di isi')
+        .notEmpty()
+        .withMessage('Question Id tidak boleh kosong'),
+]
+exports.validateUpdateAnswerLksExamQuestion = [
+    check('answer_id')
+        .exists()
+        .withMessage('Answer Id wajib di isi')
+        .notEmpty()
+        .withMessage('Answer Id tidak boleh kosong'),
+
+    check('answer')
+        .exists()
+        .withMessage('Answer wajib di isi')
+        .notEmpty()
+        .withMessage('Answer tidak boleh kosong'),
+
+    check('lks_attemption_id')
+        .exists()
+        .withMessage('Attemption Id wajib di isi')
+        .notEmpty()
+        .withMessage('attemption_id tidak boleh kosong'),
+
+    check('question_id')
+        .exists()
+        .withMessage('Question Id wajib di isi')
+        .notEmpty()
+        .withMessage('Question Id tidak boleh kosong'),
+]
+
+exports.validateDeleteAnswerLksExamQuestion = [
+    check('answer_id')
+        .exists()
+        .withMessage('Answer Id wajib di isi')
+        .notEmpty()
+        .withMessage('Answer Id tidak boleh kosong'),
+
+    check('lks_attemption_id')
+        .exists()
+        .withMessage('Attemption Id wajib di isi')
+        .notEmpty()
+        .withMessage('attemption_id tidak boleh kosong'),
+
+    check('question_id')
+        .exists()
+        .withMessage('Question Id wajib di isi')
+        .notEmpty()
+        .withMessage('Question Id tidak boleh kosong'),
+]
+
+exports.validateCorrectedLksExamAnswer = [
+    check('is_correct')
+        .exists()
+        .withMessage('Jawaban wajib di isi')
+        .notEmpty()
+        .withMessage('Jawaban Id tidak boleh kosong'),
+
+]
