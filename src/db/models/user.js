@@ -27,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
            }
           });
 
+          User.hasOne(models.ClassMarkContent, {
+            as: 'class_mark_content',
+            foreignKey: 'member_id'
+           
+          });
+
           User.belongsToMany(models.Lks, {
             as:"tutor_lks" ,
             through: models.TutorLks,

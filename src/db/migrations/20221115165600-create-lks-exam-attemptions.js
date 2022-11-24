@@ -76,8 +76,8 @@ module.exports = {
         DECLARE total_question int DEFAULT 0;
         SET total_question = (
             SELECT COUNT(id) as count
-            FROM exam_questions as e
-            WHERE e.lks_content_exam_id=new.lks_content_exam_id
+            FROM lks_exam_questions as e
+            WHERE e.lks_content_id = new.lks_content_id
             );
         SET new.total_empty = total_question;
         END;

@@ -13,7 +13,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-  
 
       class_id: {
         type: Sequelize.INTEGER,

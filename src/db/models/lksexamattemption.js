@@ -12,16 +12,25 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
 
-    //   ExamAttemptions.hasMany(models.ExamAttemptionsAnswers, {
-    //     as: 'answers',
-    //     foreignKey: 'attemption_id',
-    //     foreignKeyConstraint: true,
-    // })
+      LksExamAttemptions.hasMany(models.LksExamAttemptionsAnswers, {
+        as: 'answers',
+        foreignKey: 'lks_attemption_id',
+    })
 
-    //   ExamAttemptions.belongsTo(models.Exam,{
-    //     as: "exam",
-    //     foreignKey: 'exam_id'
-    // })
+    LksExamAttemptions.hasOne(models.LksExamAttemptionsAnswers, {
+      as: 'not_yet_corrected',
+      foreignKey: 'lks_attemption_id',
+  })
+
+    LksExamAttemptions.belongsTo(models.LksContent,{
+        as: 'lks_content',
+        foreignKey: 'lks_content_exam_id'
+    })
+
+    LksExamAttemptions.belongsTo(models.User,{
+      as: 'student',
+      foreignKey: 'user_id'
+  })
     }
   }
   LksExamAttemptions.init({
