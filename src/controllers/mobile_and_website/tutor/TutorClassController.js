@@ -489,9 +489,10 @@ const TutorClassController = {
                     if (content.lks_content_type_id == 8003){
 
                         var studentAttempts = await LksExamAttemptions.findAll({
-                           include: [{model: User, as: "student",attributes: ['id','name','email','photo_profile','phone_number']},{ model: LksExamAttemptionsAnswers, as: 'not_yet_corrected', attributes: [[Sequelize.fn('count', Sequelize.col('is_corrected')), 'count']],
-                           group : ['LksExamAttemptionsAnswers.is_corrected'],
-                           raw: true,required: false ,where: {
+                           include: [{model: User, as: "student",attributes: ['id','name','email','photo_profile','phone_number']},
+                           { model: LksExamAttemptionsAnswers, as: 'not_yet_corrected', attributes: [[Sequelize.fn('count', Sequelize.col('is_corrected')), 'count']],
+                           group : ['LksExamAttemptionsAnswers.user_id'],
+                           raw: true,  separate : true ,required: false ,where: {
                             is_corrected: false
                            }}],
                             where:{
