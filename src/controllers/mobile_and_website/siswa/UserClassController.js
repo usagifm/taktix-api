@@ -67,7 +67,9 @@ const UserClassController = {
     async enrolledClass(req, res, next) {
         try {
             const user = await User.findOne({
-                include: [{ model: Class, as: "user_classes" }],
+                include: [{ model: Class, as: "user_classes" , include: [
+                { model: SetMaster, as: 'grade' },
+                { model: SetMaster, as: 'subject' }]}],
                 where: {
                     id: req.user.user.id
                 },
