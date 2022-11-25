@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'lks_attemption_id',
     })
 
-    LksExamAttemptions.hasOne(models.LksExamAttemptionsAnswers, {
+    LksExamAttemptions.hasMany(models.LksExamAttemptionsAnswers, {
       as: 'not_yet_corrected',
       foreignKey: 'lks_attemption_id',
   })
