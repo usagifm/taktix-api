@@ -485,7 +485,7 @@ const TutorClassController = {
                             model: SetMaster,
                             as: 'question_type',
                         },
-                    },]
+                    }]
                         ,
                         where: {
                             lks_section_id: req.params.section_id,
