@@ -478,7 +478,14 @@ const TutorClassController = {
                 if (kelas) {
 
                     var content = await LksContent.findOne({
-                       include: [{ model: SetMaster, as: "lks_content_type" }]
+                       include: [{ model: SetMaster, as: "lks_content_type" },{
+                        model: LksExamQuestion,
+                        as: 'questions',
+                        include: {
+                            model: SetMaster,
+                            as: 'question_type',
+                        },
+                    },]
                         ,
                         where: {
                             lks_section_id: req.params.section_id,
