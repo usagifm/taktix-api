@@ -254,9 +254,15 @@ const TutorLksController = {
     async getTutorLks(req, res, next) {
         try {
 
+            const where = {};
+            const {subject_id, title,grade_id} = req.query;
+            if (subject_id) where.subject_id = { [Op.eq]: subject_id}
+            if (grade_id) where.grade_id = { [Op.eq]: grade_id}
+            if (title) where.title = { [Op.like]: `%${title}%`}
+
             const tutor = await User.findOne({
                 include: [
-                    { model: Lks, as: 'tutor_lks',order: [['created_at', 'DESC']],include: [
+                    { model: Lks, as: 'tutor_lks', where: where, required: false ,order: [['created_at', 'DESC']],include: [
                         { model: SetMaster, as: 'grade'},
                         { model: SetMaster, as: 'subject'},
                         { model: LksSection, as: 'sections' },
