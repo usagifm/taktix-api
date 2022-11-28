@@ -98,6 +98,7 @@ const TutorLksController = {
 
 
             });
+            if (rows.length > 0){
 
             rows = rows.map(function(item) {
 
@@ -106,6 +107,7 @@ const TutorLksController = {
                 return item
 
             });
+        }
 
             const result = pagination({
                 data: rows,
@@ -213,15 +215,17 @@ const TutorLksController = {
                     distinct: true,                   
                 })
 
-                var newRows = rows.map(function(item) {
+                if (rows.length > 0){
+                rows = rows.map(function(item) {
 
                     item.setDataValue('is_owned', true);
 
                     return item
                 });
+            }
 
                 const result = pagination({
-                    data: newRows,
+                    data: rows,
                     count,
                     page,
                     per_page
@@ -317,7 +321,7 @@ const TutorLksController = {
             if(is_owned){ 
                 include = {model: LksSection, as: "sections", include: {model: LksContent, as: "contents"}}
             }else {
-                include = {model: LksSection, as: "sections",  include: {model: LksContent, as: "contents",attributes: ['content_name'] }}
+                include = {model: LksSection, as: "sections",  include: {model: LksContent, as: "contents"}}
             }
 
             const lks = await Lks.findOne({
