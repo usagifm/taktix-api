@@ -514,7 +514,10 @@ const UserClassController = {
                                 var createdExamAttemption = await LksExamAttemptions.findOne({
                                     include: [
                                         { model: LksExamAttemptionsAnswers, as: 'answers', attributes: { exclude: ['is_correct', 'is_corrected'] } },
-                                        { model: LksContent, as: 'lks_content', include: { model: LksExamQuestion, as: "questions", attributes: { exclude: ['answer'] } } }
+                                        { model: LksContent, as: 'lks_content', include: { model: LksExamQuestion, as: "questions", attributes: { exclude: ['answer'] },  include: {
+                                            model: SetMaster,
+                                            as: 'question_type',
+                                        }, } }
                                     ],
                                     where: {
                                         id: newExamAttemption.id,
