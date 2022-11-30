@@ -12,7 +12,7 @@ import ExamAnswerController from '../controllers/mobile_and_website/siswa/ExamAn
 import TutorClassController from '../controllers/mobile_and_website/tutor/TutorClassController'
 import TutorLksController from '../controllers/mobile_and_website/tutor/TutorLksController'
 import UserClassController from '../controllers/mobile_and_website/siswa/UserClassController'
-import UserClassExamController from '../controllers/mobile_and_website/siswa/UserClassExamController'
+
 
 const routes = (app) => {   
     // GENERAL
@@ -75,11 +75,11 @@ const routes = (app) => {
     app.get('/student/class/:class_id/section/:section_id', checkToken ,UserClassController.getClassLksSectionDetail)
     app.get('/student/class/:class_id/section/:section_id/content/:content_id', checkToken ,UserClassController.getClassLksContentDetail)
     app.post('/student/class/:class_id/section/:section_id/content/:content_id/mark', checkToken ,UserClassController.markClassLksContent)
-    app.post('/student/class/:class_id/section/:section_id/content/:content_id/start', checkToken ,UserClassExamController.startClassLksContentExam)
-    app.post('/student/class/:class_id/section/:section_id/content/:content_id/insert', checkToken, validator.validateInsertAnswerLksExamQuestion  ,UserClassExamController.insertAnswerLksExamQuestion)
-    app.patch('/student/class/:class_id/section/:section_id/content/:content_id/update', checkToken, validator.validateUpdateAnswerLksExamQuestion  ,UserClassExamController.updateAnswerLksExamQuestion)
-    app.delete('/student/class/:class_id/section/:section_id/content/:content_id/delete', checkToken, validator.validateDeleteAnswerLksExamQuestion  ,UserClassExamController.deleteAnswerLksExamQuestion)
-    app.post('/student/class/:class_id/section/:section_id/content/:content_id/finish', checkToken ,UserClassExamController.finishAnswerLksExam)
+    app.post('/student/class/:class_id/section/:section_id/content/:content_id/start', checkToken ,UserClassController.startClassLksContentExam)
+    app.post('/student/class/:class_id/section/:section_id/content/:content_id/insert', checkToken, validator.validateInsertAnswerLksExamQuestion  ,UserClassController.insertAnswerLksExamQuestion)
+    app.patch('/student/class/:class_id/section/:section_id/content/:content_id/update', checkToken, validator.validateUpdateAnswerLksExamQuestion  ,UserClassController.updateAnswerLksExamQuestion)
+    app.delete('/student/class/:class_id/section/:section_id/content/:content_id/delete', checkToken, validator.validateDeleteAnswerLksExamQuestion  ,UserClassController.deleteAnswerLksExamQuestion)
+    app.post('/student/class/:class_id/section/:section_id/content/:content_id/finish', checkToken ,UserClassController.finishAnswerLksExam)
     app.get('/student/class/:class_id/section/:section_id/content/:content_id/lks-exam-attemption/:lks_attemption_id', checkToken ,UserClassController.getLksExamAttemptionDetail)
     
 
