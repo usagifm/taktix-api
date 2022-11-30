@@ -10,6 +10,24 @@ import { body, validationResult } from 'express-validator'
 const UserClassExamController = {
 
 
+    async kontol(req, res, next) {
+        try {
+
+
+            return res.status(200).send("asu")
+
+
+            
+
+        } catch (error) {
+            console.log(error)
+            let errStacks = []
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
+        }
+    },
 
 
     async startClassLksContentExam(req, res, next) {
