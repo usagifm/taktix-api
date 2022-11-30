@@ -3,7 +3,8 @@ const Sequelize = require('sequelize');
 import { customAlphabet } from 'nanoid'
 const Op = Sequelize.Op
 
-import { Class, SetMaster, Lks, LksSection, LksContent, ClassMember, User, ClassMarkContent, LksExamQuestion, LksExamAttemptions,LksExamAttemptionsAnswers, } from '../../../db/models'
+import { Class, SetMaster, Lks, LksSection, LksContent, ClassMember, User, ClassMarkContent, LksExamQuestion, LksExamAttemptions } from '../../../db/models'
+import LksExamAttemptionsAnswers from '../../../db/models/lksexamattemptionsanswers'
 import { pagination } from '../../../helpers/pagination';
 import { body, validationResult } from 'express-validator'
 
@@ -559,12 +560,15 @@ const UserClassController = {
                 return errorResponse(res, 400, "Validation error", errors.array())
               }
 
+
+            console.log("Batas : 1")
             var content = await LksContent.findByPk(req.params.content_id)
 
             if(!content){
                 return errorResponse(res, 404, "Soal tidak ditemukan", [])
             }
 
+            console.log("Batas : 2")
             const NOW = new Date();
 
             var classMember = await ClassMember.findOne({
@@ -575,11 +579,13 @@ const UserClassController = {
                 }
             })
 
+            console.log("Batas : 3")
+
             if(!classMember){
                 return errorResponse(res, 400, "Anda belum masuk ke dalam kelas untuk mengerjakan soal", [])
             }
         
-
+            console.log("Batas : 4")
             var examAttemption = await LksExamAttemptions.findOne({
                 where: {
                     lks_content_exam_id: content.id,
@@ -593,8 +599,10 @@ const UserClassController = {
                     }
                 }
             })
+            console.log("Batas : 5")
  
        if(examAttemption){
+        console.log("Batas : 6")
 
         var isAnswered = await LksExamAttemptionsAnswers.findOne({
             where:{
@@ -604,30 +612,38 @@ const UserClassController = {
             }
         })
 
+        console.log("Batas : 7")
+
         if(isAnswered){
             return errorResponse(res, 400, "Pertanyaan sudah pernah dijawab", [])
         }
 
+        console.log("Batas : 8")
         var examQuestion = await LksExamQuestion.findOne({
             where: {
                 id: req.body.question_id,
                 lks_content_id: content.id
             }
         })
+        console.log("Batas : 9")
 
         if(!examQuestion) {
             return errorResponse(res, 400, "Pertanyaan tidak ditemukan", [])
         }
-
+        console.log("Batas : 10")
         var isCorrect = 0
         var isCorrected = 0
 
+        console.log("Batas : 11")
+
         if (examQuestion.question_type_id == 6001){
+            console.log("Batas : 12")
 
             if(req.body.answer == examQuestion.answer){
                 isCorrect = 1
             }
 
+            console.log("Batas : 13")
             isCorrected = 1
   
             var questionAnswer = await LksExamAttemptionsAnswers.create({
@@ -640,8 +656,10 @@ const UserClassController = {
                 is_corrected: isCorrected,
 
             })
-        }else {
 
+            console.log("Batas : 14")
+        }else {
+            console.log("Batas : 15")
             var attributes = { 
                 class_id: 2,
                 answer: req.body.answer,
@@ -652,20 +670,25 @@ const UserClassController = {
                 is_corrected: isCorrected
             }
 
+            console.log("Batas : 16")
+
             if(req.body.image_answer != undefined){
                 attributes.image_answer = req.body.image_answer
                 attributes.answer = "Dijawab dengan gambar"
             }
-
+   console.log("Batas : 17")
 
             var questionAnswer = await LksExamAttemptionsAnswers.create(
                 attributes
             )
+
+            console.log("Batas : 18")
             
         }
 
                 delete questionAnswer.dataValues.is_correct
                 delete questionAnswer.dataValues.is_corrected
+                console.log("Batas : 19")
                 
                 return res.status(200).send({message: "Pertanyaan berhasil dijawab", data: questionAnswer})
      
