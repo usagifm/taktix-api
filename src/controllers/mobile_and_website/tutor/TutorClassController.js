@@ -498,7 +498,7 @@ const TutorClassController = {
                         var studentAttempts = await LksExamAttemptions.findAll({
                            include: [{model: User, as: "student",attributes: ['id','name','email','photo_profile','phone_number']},
                            { model: LksExamAttemptionsAnswers, as: 'not_yet_corrected', attributes: [[Sequelize.fn('count', Sequelize.col('is_corrected')), 'count']],
-                           group : ['LksExamAttemptionsAnswers.user_id'],
+                           group : ['LksExamAttemptionsAnswers.is_corrected'],
                            raw: true,  separate : true ,required: false ,where: {
                             is_corrected: false
                            }}],
