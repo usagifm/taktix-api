@@ -357,8 +357,6 @@ exports.validateEnrollUserToClass = [
 
 exports.validateInsertAnswerLksExamQuestion = [
     check('answer')
-        .exists()
-        .withMessage('Answer wajib di isi')
         .notEmpty()
         .withMessage('Answer tidak boleh kosong'),
 

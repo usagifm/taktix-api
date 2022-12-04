@@ -655,7 +655,7 @@ const UserClassController = {
                 is_corrected: isCorrected
             }
 
-            if(req.body.image_answer  !== null || req.body.image_answer  !== "" || req.body.image_answer  !== undefined){
+            if(req.body.image_answer  !== null && req.body.image_answer  !== "" && req.body.image_answer !== undefined){
 
                 attributes.image_answer = req.body.image_answer
                 attributes.answer = "Dijawab dengan gambar"
@@ -793,8 +793,8 @@ const UserClassController = {
                 is_corrected: isCorrected
             }
 
-            if(req.body.image_answer  !== null || req.body.image_answer  !== "" || req.body.image_answer  !== undefined){
-
+            if(req.body.image_answer  !== null && req.body.image_answer  !== "" && req.body.image_answer !== undefined){
+                
                 attributes.image_answer = req.body.image_answer
                 attributes.answer = "Dijawab dengan gambar"
             }
