@@ -357,8 +357,11 @@ exports.validateEnrollUserToClass = [
 
 exports.validateInsertAnswerLksExamQuestion = [
     check('answer')
-        .notEmpty()
-        .withMessage('Answer tidak boleh kosong'),
+    .exists()
+    .withMessage('Answer wajib di isi')
+        // .notEmpty()
+        // .withMessage('Answer tidak boleh kosong')
+        ,
 
     check('lks_attemption_id')
         .exists()
@@ -374,8 +377,11 @@ exports.validateInsertAnswerLksExamQuestion = [
 ]
 exports.validateUpdateAnswerLksExamQuestion = [
     check('answer_id')
-        .notEmpty()
-        .withMessage('Answer Id tidak boleh kosong'),
+        .exists()
+        .withMessage('Answer Id wajib di isi')
+        // .notEmpty()
+        // .withMessage('Answer Id tidak boleh kosong')
+        ,
 
     check('answer')
         .exists()
