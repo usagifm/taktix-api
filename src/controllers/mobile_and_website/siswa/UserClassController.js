@@ -806,9 +806,7 @@ const UserClassController = {
 
             console.log("attributes pas akhir : ", attributes)
 
-            var questionAnswer = await LksExamAttemptionsAnswers.update({
-                answer: "Bangsat"
-            },{
+            var questionAnswer = await LksExamAttemptionsAnswers.update(attributes,{
                 where: {
                     id: isAnswered.id,
                     lks_attemption_id: isAnswered.lks_attemption_id,
