@@ -797,16 +797,12 @@ const UserClassController = {
             }
 
             if(req.body.image_answer  !== null && req.body.image_answer  !== "" && req.body.image_answer !== undefined){
-
                 attributes.image_answer = req.body.image_answer
                 attributes.answer = "Dijawab dengan gambar"
             }
 
             var questionAnswer = await LksExamAttemptionsAnswers.update({
-                answer: req.body.answer,
-                is_correct: isCorrect,
-                is_corrected: isCorrected,
-
+                attributes
             },{
                 where: {
                     id: isAnswered.id,
