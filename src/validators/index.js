@@ -374,8 +374,6 @@ exports.validateInsertAnswerLksExamQuestion = [
 ]
 exports.validateUpdateAnswerLksExamQuestion = [
     check('answer_id')
-        .exists()
-        .withMessage('Answer Id wajib di isi')
         .notEmpty()
         .withMessage('Answer Id tidak boleh kosong'),
 
