@@ -796,10 +796,15 @@ const UserClassController = {
                 is_corrected: isCorrected
             }
 
+            console.log("attributes pas awal : ", attributes)
+
             if(req.body.image_answer  !== null && req.body.image_answer  !== "" && req.body.image_answer !== undefined){
                 attributes.image_answer = req.body.image_answer
                 attributes.answer = "Dijawab dengan gambar"
             }
+
+
+            console.log("attributes pas akhir : ", attributes)
 
             var questionAnswer = await LksExamAttemptionsAnswers.update({
                 attributes
