@@ -435,8 +435,11 @@ const UserClassController = {
                     where: {
                         id: req.params.class_id,
                     },
+
+                  
                 })
 
+                console.log("Kelas : ", kelas)
                 if (kelas) {
 
                     var content = await LksContent.findOne({
@@ -794,7 +797,7 @@ const UserClassController = {
             }
 
             if(req.body.image_answer  !== null && req.body.image_answer  !== "" && req.body.image_answer !== undefined){
-                
+
                 attributes.image_answer = req.body.image_answer
                 attributes.answer = "Dijawab dengan gambar"
             }
