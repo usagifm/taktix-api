@@ -649,7 +649,7 @@ const UserClassController = {
         }else {
 
             var attributes = { 
-                class_id: 2,
+                class_id: req.params.class_id,
                 answer: req.body.answer,
                 lks_attemption_id: req.body.lks_attemption_id,
                 question_id: examQuestion.id,
