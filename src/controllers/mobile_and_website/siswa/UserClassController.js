@@ -806,17 +806,16 @@ const UserClassController = {
 
             console.log("attributes pas akhir : ", attributes)
 
-            await LksExamAttemptionsAnswers.update({
-                attributes
+            var questionAnswer = await LksExamAttemptionsAnswers.update({
+                answer: "Bangsat"
             },{
                 where: {
                     id: isAnswered.id,
                     lks_attemption_id: isAnswered.lks_attemption_id,
                     question_id: req.body.question_id,
-                    // user_id: req.user.user.id
+                    user_id: req.user.user.id
                 },
             })
-
             return res.status(200).send({message: "Jawaban berhasil di update"})
         }
         
