@@ -11,7 +11,14 @@ import Randomstring from 'randomstring'
 import bcrypt from 'bcrypt'
 const saltRounds = 10
 
-const getProfile = (googleId, role_id) => {
+const getProfile = (googleId, role_id, fcm_token) => {
+
+    if(fcm_token  !== null && fcm_token  !== "" && fcm_token !== undefined){
+
+
+    }
+
+    
     const id = googleId.payload.sub
     const displayName = googleId.payload.name
     const email = googleId.payload.email
@@ -27,6 +34,7 @@ const getProfile = (googleId, role_id) => {
             photo_profile,
             is_verified: 1,
             role_id,
+            fcm_token
         }
     }
 
@@ -43,10 +51,13 @@ const AuthController = {
         const role_id = req.query.role_id
         console.log('user ', req.user)
 
+        const fcm_token = req.query.fcm_token
+
         try {
             const user = await User.findOne({
                 where: { google_id: req.user.payload.sub },
             })
+            
 
             if (!user) {
                 const user = await User.findOne({
@@ -55,15 +66,46 @@ const AuthController = {
 
                 if (!user) {
                     const user = await User.create(
-                        getProfile(req.user, role_id)
+                        getProfile(req.user, role_id, fcm_token)
                     )
+                    
+
                     const token = jwt.sign({ user }, process.env.JWT_SECRET)
                     return res.status(200).send({ token, user })
                 }
 
+
+            if(fcm_token !== null && fcm_token !== "" && fcm_token !== undefined){
+
+                const insertToken =  await User.update(
+                     { fcm_token: fcm_token },
+                     {
+                         where: {
+                             id: user.id,
+                         },
+                     }
+                     )
+                 
+                 }
+
+
                 const token = jwt.sign({ user }, process.env.JWT_SECRET)
                 return res.status(200).send({ token, user })
             }
+
+
+            if(fcm_token !== null && fcm_token !== "" && fcm_token !== undefined){
+
+                const insertToken =  await User.update(
+                     { fcm_token: fcm_token },
+                     {
+                         where: {
+                             id: user.id,
+                         },
+                     }
+                     )
+                 
+                 }
 
             const token = jwt.sign({ user }, process.env.JWT_SECRET)
             return res.status(200).send({ token, user })
@@ -123,6 +165,21 @@ const AuthController = {
                                 )
                             })
                     } else if (user.is_verified == 1) {
+
+                        if(req.body.fcm_token !== null && req.body.fcm_token  !== "" && req.body.fcm_token !== undefined){
+
+                           const insertToken =  await User.update(
+                                { fcm_token: req.body.fcm_token },
+                                {
+                                    where: {
+                                        id: user.id,
+                                    },
+                                }
+                                )
+                            
+                            }
+
+
                         const token = jwt.sign({ user }, process.env.JWT_SECRET)
                         return res.status(200).send({ token, user })
                     }
