@@ -69,6 +69,9 @@ const AuthController = {
                         getProfile(req.user, role_id)
                     )
 
+
+                    console.log("Isinya setelah create : ", user)
+
                     console.log("Disini masuk : 1")
                     const token = jwt.sign({ user }, process.env.JWT_SECRET)
                     return res.status(200).send({ token, user })
