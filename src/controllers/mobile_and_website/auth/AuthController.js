@@ -68,8 +68,8 @@ const AuthController = {
                     const user = await User.create(
                         getProfile(req.user, role_id)
                     )
-                    
 
+                    console.log("Disini masuk : 1")
                     const token = jwt.sign({ user }, process.env.JWT_SECRET)
                     return res.status(200).send({ token, user })
                 }
@@ -89,6 +89,7 @@ const AuthController = {
             //      }
 
 
+            console.log("Disini masuk : 2")
                 const token = jwt.sign({ user }, process.env.JWT_SECRET)
                 return res.status(200).send({ token, user })
             }
@@ -107,6 +108,7 @@ const AuthController = {
                  
             //      }
 
+            console.log("Disini masuk : 3")
             const token = jwt.sign({ user }, process.env.JWT_SECRET)
             return res.status(200).send({ token, user })
         } catch (err) {
