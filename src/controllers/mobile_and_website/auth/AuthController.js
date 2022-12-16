@@ -67,7 +67,9 @@ const AuthController = {
                 if (!user) {
                     const user = await User.create(
                         getProfile(req.user, role_id)
-                    )
+                    ,{
+                        returning : true
+                    })
 
 
                     console.log("Isinya setelah create : ", user)
