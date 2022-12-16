@@ -11,12 +11,12 @@ import Randomstring from 'randomstring'
 import bcrypt from 'bcrypt'
 const saltRounds = 10
 
-const getProfile = (googleId, role_id, fcm_token) => {
+const getProfile = (googleId, role_id) => {
 
-    if(fcm_token  !== null && fcm_token  !== "" && fcm_token !== undefined){
+    // if(fcm_token  !== null && fcm_token  !== "" && fcm_token !== undefined){
 
 
-    }
+    // }
 
     
     const id = googleId.payload.sub
@@ -34,7 +34,7 @@ const getProfile = (googleId, role_id, fcm_token) => {
             photo_profile,
             is_verified: 1,
             role_id,
-            fcm_token
+            // fcm_token
         }
     }
 
@@ -51,7 +51,7 @@ const AuthController = {
         const role_id = req.query.role_id
         console.log('user ', req.user)
 
-        const fcm_token = req.query.fcm_token
+        // const fcm_token = req.query.fcm_token
 
         try {
             const user = await User.findOne({
@@ -66,7 +66,7 @@ const AuthController = {
 
                 if (!user) {
                     const user = await User.create(
-                        getProfile(req.user, role_id, fcm_token)
+                        getProfile(req.user, role_id)
                     )
                     
 
@@ -75,18 +75,18 @@ const AuthController = {
                 }
 
 
-            if(fcm_token !== null && fcm_token !== "" && fcm_token !== undefined){
+            // if(fcm_token !== null && fcm_token !== "" && fcm_token !== undefined){
 
-                const insertToken =  await User.update(
-                     { fcm_token: fcm_token },
-                     {
-                         where: {
-                             id: user.id,
-                         },
-                     }
-                     )
+            //     const insertToken =  await User.update(
+            //          { fcm_token: fcm_token },
+            //          {
+            //              where: {
+            //                  id: user.id,
+            //              },
+            //          }
+            //          )
                  
-                 }
+            //      }
 
 
                 const token = jwt.sign({ user }, process.env.JWT_SECRET)
@@ -94,18 +94,18 @@ const AuthController = {
             }
 
 
-            if(fcm_token !== null && fcm_token !== "" && fcm_token !== undefined){
+            // if(fcm_token !== null && fcm_token !== "" && fcm_token !== undefined){
 
-                const insertToken =  await User.update(
-                     { fcm_token: fcm_token },
-                     {
-                         where: {
-                             id: user.id,
-                         },
-                     }
-                     )
+            //     const insertToken =  await User.update(
+            //          { fcm_token: fcm_token },
+            //          {
+            //              where: {
+            //                  id: user.id,
+            //              },
+            //          }
+            //          )
                  
-                 }
+            //      }
 
             const token = jwt.sign({ user }, process.env.JWT_SECRET)
             return res.status(200).send({ token, user })
@@ -166,18 +166,18 @@ const AuthController = {
                             })
                     } else if (user.is_verified == 1) {
 
-                        if(req.body.fcm_token !== null && req.body.fcm_token  !== "" && req.body.fcm_token !== undefined){
+                        // if(req.body.fcm_token !== null && req.body.fcm_token  !== "" && req.body.fcm_token !== undefined){
 
-                           const insertToken =  await User.update(
-                                { fcm_token: req.body.fcm_token },
-                                {
-                                    where: {
-                                        id: user.id,
-                                    },
-                                }
-                                )
+                        //    const insertToken =  await User.update(
+                        //         { fcm_token: req.body.fcm_token },
+                        //         {
+                        //             where: {
+                        //                 id: user.id,
+                        //             },
+                        //         }
+                        //         )
                             
-                            }
+                        //     }
 
 
                         const token = jwt.sign({ user }, process.env.JWT_SECRET)
