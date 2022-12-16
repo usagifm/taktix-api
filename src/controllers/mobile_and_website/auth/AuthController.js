@@ -70,11 +70,16 @@ const AuthController = {
                     )
 
 
-                    console.log("Isinya setelah create : ", newUser)
+                    const user = await User.findOne({
+
+                        where: { email: getProfile(req.user).email }})
+        
+
+                    console.log("Isinya setelah create : ", user)
 
                     console.log("Disini masuk : 1")
-                    const token = jwt.sign({ newUser }, process.env.JWT_SECRET)
-                    return res.status(200).send({ token, newUser })
+                    const token = jwt.sign({ user }, process.env.JWT_SECRET)
+                    return res.status(200).send({ token, user })
                 }
 
 
