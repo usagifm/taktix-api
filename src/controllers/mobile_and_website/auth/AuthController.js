@@ -65,18 +65,16 @@ const AuthController = {
                 })
 
                 if (!user) {
-                    const user = await User.create(
+                    var newUser = await User.create(
                         getProfile(req.user, role_id)
-                    ,{
-                        returning : true
-                    })
+                    )
 
 
-                    console.log("Isinya setelah create : ", user)
+                    console.log("Isinya setelah create : ", newUser)
 
                     console.log("Disini masuk : 1")
-                    const token = jwt.sign({ user }, process.env.JWT_SECRET)
-                    return res.status(200).send({ token, user })
+                    const token = jwt.sign({ newUser }, process.env.JWT_SECRET)
+                    return res.status(200).send({ token, newUser })
                 }
 
 
