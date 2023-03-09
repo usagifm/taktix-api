@@ -13,7 +13,7 @@ module.exports = {
                     allowNull: false,
                     onUpdate: 'cascade',
                     onDelete: 'cascade',
-                    references: { model: 'Users', key: 'id' },
+                    // references: { model: 'Users', key: 'id' },
                 },
                 token: {
                     type: Sequelize.STRING,
