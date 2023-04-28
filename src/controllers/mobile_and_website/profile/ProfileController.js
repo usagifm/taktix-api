@@ -160,7 +160,7 @@ const ProfileController = {
             if (user) {
                 await User.update(
                     {
-                        photo_profile: req.body.new_password,
+                        photo_profile: req.body.photo_profile,
                     },
                     {
                         where: {
