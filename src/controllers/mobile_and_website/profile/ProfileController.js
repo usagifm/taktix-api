@@ -141,7 +141,48 @@ const ProfileController = {
     },
 
 
+    async editPhotoPRofile(req, res, next) {
+        const errors = validationResult(req)
+        if (!errors.isEmpty()) {
+            return errorResponse(res, 400, 'Validation error', errors.array())
+        }
+        try {
+            // // Get Decoded ID
+            var user_id = req.user.user.id
 
+
+            const user = await User.findOne({
+                where: {
+                    id: user_id,
+                },
+            })
+
+            if (user) {
+                await User.update(
+                    {
+                        photo_profile: req.body.new_password,
+                    },
+                    {
+                        where: {
+                            id: user_id,
+                        },
+                    }
+                )
+                return res.status(200).json({ message: 'Photo Profile Berhasil Diubah' })
+            } else {
+                return errorResponse(res, 400, 'User Tidak Ditemukan', [])
+            }
+        } catch (error) {
+            console.log(error)
+
+            let errStacks = []
+
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
+        }
+    },
 
 }
 

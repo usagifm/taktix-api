@@ -12,13 +12,13 @@ module.exports = {
           updated_at: new Date(),
       },
 
-      {
-          id: 8002,
-          category: 'lks_content_type',
-          name: 'Soal',
-          created_at: new Date(),
-          updated_at: new Date(),
-      },
+      // {
+      //     id: 8002,
+      //     category: 'lks_content_type',
+      //     name: 'Soal',
+      //     created_at: new Date(),
+      //     updated_at: new Date(),
+      // },
 
   ])
   },

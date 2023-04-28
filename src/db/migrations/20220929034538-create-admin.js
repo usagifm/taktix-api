@@ -11,6 +11,12 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      email: {
+        type: Sequelize.STRING
+      },
+      photo_profile: {
+        type: Sequelize.STRING
+      },
       username: {
         type: Sequelize.STRING
       },
@@ -18,6 +24,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       admin_key: {
+        type: Sequelize.STRING
+      },
+      remember_token: {
         type: Sequelize.STRING
       },
       created_at: {

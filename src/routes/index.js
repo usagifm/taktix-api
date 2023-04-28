@@ -45,6 +45,7 @@ const routes = (app) => {
     app.get('/profile',checkToken, ProfileController.getProfile)
     app.patch('/profile/edit',checkToken, validator.validateEditProfile, ProfileController.editProfile)
     app.patch('/profile/password',checkToken, validator.validateEditPassword, ProfileController.editPassword)
+    app.patch('/profile/edit-photo-profile',checkToken, validator.validateEditPhotoProfile, ProfileController.editPhotoPRofile)
 
     // Both User 
     app.get('/exam', checkToken ,validator.validateGetExams, ExamController.getExams)

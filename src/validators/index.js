@@ -199,6 +199,14 @@ exports.validateEditProfile = [
         .withMessage('Format email salah'),
 ]
 
+exports.validateEditPhotoProfile = [
+    check('photo_profile')
+        .exists()
+        .withMessage('Photo profile wajib di isi')
+        .notEmpty()
+        .withMessage('Photo profil tidak boleh kosong')
+]
+
 // EXAMS
 exports.validateGetExams = [
     check('per_page')
