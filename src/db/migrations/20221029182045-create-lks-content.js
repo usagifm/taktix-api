@@ -20,9 +20,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      content_name: {
-        type: Sequelize.STRING
-      },
       text_content: {
         type: Sequelize.TEXT
       },

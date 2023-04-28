@@ -14,9 +14,9 @@ module.exports = {
             }
         )
 
-        queryInterface.bulkDelete('set_masters', {
-            [Op.or]: [{ id: 8002 }],
-        })
+        // queryInterface.bulkDelete('set_masters', {
+        //     [Op.or]: [{ id: 8002 }],
+        // })
 
         queryInterface.bulkInsert('set_masters', [
             {

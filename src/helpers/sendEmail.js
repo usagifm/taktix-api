@@ -7,7 +7,7 @@ module.exports = {
             secure: true,
             auth: {
                 user: 'support@sanedu.id',
-                pass: 'testsatuduatiga',
+                pass: '3;IxmSzy,S}N',
             },
         })
 
