@@ -108,6 +108,12 @@ const routes = (app) => {
     app.post('/tutor/lks/:lks_id/buy', checkToken, TutorLksController.buyLks)
     app.get('/tutor/lks/:lks_id', checkToken, TutorLksController.getLksById)
 
+
+    // special endpoints for program
+
+    app.get('/student/matter/:lks_id', checkToken ,UserClassController.getAllLksMatter)
+    
+
 }
 
 export default routes
