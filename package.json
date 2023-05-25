@@ -39,6 +39,7 @@
         "passport-google-id-token": "^0.4.7",
         "passport-google-token": "^0.1.2",
         "randomstring": "^1.2.2",
+        "redis": "^4.6.6",
         "sequelize": "^6.23.0"
     },
     "devDependencies": {

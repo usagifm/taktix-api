@@ -2,6 +2,9 @@ import { errorResponse, errorMapper } from '../../../helpers/errorResponse'
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op
 
+import redisClient from '../../../helpers/redis';
+import { redisPrefix } from '../../../services/redisPrefix';
+
 import { User,Exam,ExamEnrollments,ExamQuestions,ExamAttemptions,ExamAttemptionsAnswers,ExamRatings,SetMaster } from '../../../db/models'
 import { pagination } from '../../../helpers/pagination';
 import { body, validationResult } from 'express-validator'
@@ -14,6 +17,21 @@ const ExamController = {
             const page = req.query.page ? parseInt(req.query.page) : 1;
             const per_page = req.query.page ? parseInt(req.query.per_page) : 1;
             const {exam_category_id, title,category_id} = req.query;
+
+            var titleString
+            if (!title) { titleString = ""}
+            else {
+                titleString = title
+            }
+
+            var redisKey = redisPrefix+'exam-list:searchQuery:'+titleString+":page-size:"+per_page.toString()+":page:"+page.toString()
+
+            const value = await redisClient.get(redisKey);
+
+            if(value) {
+                return res.status(200).send(JSON.parse(value))
+            }
+
             if (exam_category_id) where.exam_category_id = { [Op.eq]: exam_category_id}
             if (category_id) where.category_id = { [Op.eq]: category_id}
             if (title) where.title = { [Op.like]: `%${title}%`}
@@ -38,8 +56,9 @@ const ExamController = {
                 per_page
             });
 
+            await redisClient.set(redisKey, JSON.stringify(result),process.env.REDIS_EXAM_TIMEOUT);
 
-             return res.status(200).send(result)
+            return res.status(200).send(result)
 
         } catch (error) {
             console.log(error)
@@ -65,7 +84,6 @@ const ExamController = {
                       { model: SetMaster, as: 'category'},
                 ]
             })
-
 
             if (exam) {
 
@@ -341,6 +359,7 @@ const ExamController = {
                 return errorResponse(res, 400, "Anda belum mendaftar untuk mengerjakan soal", [])
             }
         
+
             const NOW = new Date();
 
             var examAttemption = await ExamAttemptions.findOne({
@@ -377,7 +396,6 @@ const ExamController = {
                         score: 0
                     }
                 )
-
 
                 var createdExamAttemption = await ExamAttemptions.findOne({
                     include: [

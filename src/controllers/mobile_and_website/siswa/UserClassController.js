@@ -6,6 +6,8 @@ const Op = Sequelize.Op
 import { Class, SetMaster, Lks, LksSection, LksContent, ClassMember, User, ClassMarkContent, LksExamQuestion, LksExamAttemptions,LksExamAttemptionsAnswers, } from '../../../db/models'
 import { pagination } from '../../../helpers/pagination';
 import { body, validationResult } from 'express-validator'
+import redisClient from '../../../helpers/redis';
+import { redisPrefix } from '../../../services/redisPrefix';
 
 const UserClassController = {
 
@@ -1035,6 +1037,50 @@ const UserClassController = {
         }
 
 
+    },
+
+    // Custom function for program materi 
+
+
+    async getAllLksMatter(req, res, next) {
+        try {
+
+            var redisKey = redisPrefix+'matter:'+req.params.lks_id.toString()
+
+            const value = await redisClient.get(redisKey);
+
+            if(value) {
+                return res.status(200).send(JSON.parse(value))
+            }
+
+                    var section = await LksSection.findAll({
+                        include: [{
+                            model: LksContent, as: "contents", include: [{ model: SetMaster, as: "lks_content_type" }]
+                        }],
+                        where: {
+                            lks_id: req.params.lks_id
+                        }
+                    })
+
+                    if (section) {
+
+                        await redisClient.set(redisKey, JSON.stringify(section),process.env.REDIS_MATTER_TIMEOUT);
+
+                        return res.status(200).send(section)
+                    } else {
+                        return errorResponse(res, 400, 'Tidak ada materi yang tersedia', [])
+                    }
+
+        } catch (error) {
+            console.log(error)
+
+            let errStacks = []
+
+            if (error.errors) {
+                errStacks = errorMapper(error.errors)
+            }
+            return errorResponse(res, 400, error.message, errStacks)
+        }
     },
 
 }
