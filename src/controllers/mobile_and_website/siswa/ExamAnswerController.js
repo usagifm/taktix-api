@@ -115,8 +115,17 @@ const ExamAnswerController = {
                 is_corrected: isCorrected
             })
 
+            var data = {
+                id : questionAnswer.id, 
+                answer : req.body.answer,
+                attemption_id: req.body.attemption_id,
+                question_id:examQuestion.id,
+                user_id: req.user.user.id,
+            }
+
+
             console.log("Check point 7")
-            return res.status(200).send({message: "Pertanyaan berhasil dijawab"})
+            return res.status(200).send({message: "Pertanyaan berhasil dijawab", data: data})
         }
         
 
@@ -235,7 +244,15 @@ const ExamAnswerController = {
                 }
             )
 
-            return res.status(200).send({message: "Jawaban pertanyaan berhasil diupdate"})
+            var data = {
+                id : isAnswered.id, 
+                answer : req.body.answer,
+                attemption_id: isAnswered.attemption_id,
+                question_id:req.body.question_id,
+                user_id: req.user.user.id,
+            }
+
+            return res.status(200).send({message: "Jawaban pertanyaan berhasil diupdate", data: data})
         }
         
         

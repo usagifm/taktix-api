@@ -24,7 +24,7 @@ const ExamController = {
                 titleString = title
             }
 
-            var redisKey = redisPrefix+'exam-list:searchQuery:'+titleString+":page-size:"+per_page.toString()+":page:"+page.toString()
+            var redisKey = redisPrefix+'exam-list:categoryId:'+category_id+':searchQuery:'+titleString+":page-size:"+per_page.toString()+":page:"+page.toString()
 
             const value = await redisClient.get(redisKey);
 
