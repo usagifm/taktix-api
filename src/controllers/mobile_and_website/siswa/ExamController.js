@@ -35,6 +35,7 @@ const ExamController = {
             if (exam_category_id) where.exam_category_id = { [Op.eq]: exam_category_id}
             if (category_id) where.category_id = { [Op.eq]: category_id}
             if (title) where.title = { [Op.like]: `%${title}%`}
+            where.is_public = true
             const offset = 0 + (req.query.page - 1) * per_page
             const { count, rows } = await Exam.findAndCountAll({
                 include: [
@@ -77,6 +78,7 @@ const ExamController = {
             const exam = await Exam.findOne({
                 where: {
                     id: req.params.exam_id,
+                    is_public : true,
                 },
                 include: [
           
@@ -181,7 +183,8 @@ const ExamController = {
 
             const exam = await Exam.findOne({
                 where: {
-                    id: req.params.exam_id
+                    id: req.params.exam_id,
+                    is_public : true,
                 }
             })
 
@@ -257,6 +260,7 @@ const ExamController = {
             if (category_id) where.category_id = { [Op.eq]: category_id}
             if (title) where.title = { [Op.like]: `%${title}%`}
           
+            where.is_public = true;
 
             if (userExam.length > 0 ){
 
@@ -1001,10 +1005,12 @@ const ExamController = {
 
 
         try {
-            const where = {};
+            var where = {};
             const {category_id} = req.query;
 
             if (category_id) where.category_id = { [Op.eq]: category_id}
+
+            where.is_public = true;
 
             const limit = req.query.limit ? parseInt(req.query.limit) : 5;
             const examsRecommendations = await Exam.findAll({
