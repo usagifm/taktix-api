@@ -159,22 +159,26 @@ exports.validateEditPassword = [
 ]
 exports.validateEditProfile = [
     check('name')
+        .optional()
         .notEmpty()
         .withMessage('Nama tidak boleh kosong')
         .isLength({ min: 5 })
         .withMessage('Nama minimal terdiri dari 5 karakter'),
 
     check('username')
+        .optional()
         .notEmpty()
         .withMessage('Username tidak boleh kosong')
         .isLength({ min: 5 })
         .withMessage('Username minimal terdiri dari 5 karakter'),
 
     check('gender')
+        .optional()
         .notEmpty()
         .withMessage('Gender tidak boleh kosong'),
 
     check('phone_number')
+        .optional()
         .notEmpty()
         .withMessage('Nomor HP tidak boleh kosong')
         .isMobilePhone()
@@ -183,19 +187,22 @@ exports.validateEditProfile = [
         .withMessage('Nomor HP minimal 11 digit dan maksimal 13 digit'),
 
     check('birth_date')
+        .optional()
         .notEmpty()
         .withMessage('Tanggal lahir tidak boleh kosong'),
 
     check('province_id')
+        .optional()
         .notEmpty()
         .withMessage('Id Provinsi tidak boleh kosong'),
 
     check('province')
+        .optional()
         .notEmpty()
         .withMessage('Provinsi tidak boleh kosong'),
 
     check('password')
-    .optional()
+        .optional()
         .custom((password) => {
             if (!isEmptyObject(password)) {
                 throw new Error('Attribute Not Allowed');
@@ -203,35 +210,44 @@ exports.validateEditProfile = [
         }),
 
     check('new_password')
-    .optional()
+        .optional()
         .custom((new_password) => {
             if (!isEmptyObject(new_password)) {
                 throw new Error('Attribute Not Allowed');
             }
         }),
     check('is_verified')
-    .optional()
+        .optional()
         .custom((is_verified) => {
             if (!isEmptyObject(is_verified)) {
                 throw new Error('Attribute Not Allowed');
             }
         }),
+
+    check('fcm_token')
+        .optional()
+        .custom((new_password) => {
+            if (!isEmptyObject(new_password)) {
+                throw new Error('Attribute Not Allowed');
+            }
+        }),
+
     check('google_id')
-    .optional()
+        .optional()
         .custom((google_id) => {
             if (!isEmptyObject(google_id)) {
                 throw new Error('Attribute Not Allowed');
             }
         }),
     check('role_id')
-    .optional()
+        .optional()
         .custom((role_id) => {
             if (!isEmptyObject(role_id)) {
                 throw new Error('Attribute Not Allowed');
             }
         }),
     check('deleted_at')
-    .optional()
+        .optional()
         .custom((deleted_at) => {
             if (!isEmptyObject(deleted_at)) {
                 throw new Error('Attribute Not Allowed');
