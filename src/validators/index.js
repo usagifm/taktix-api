@@ -195,6 +195,7 @@ exports.validateEditProfile = [
         .withMessage('Provinsi tidak boleh kosong'),
 
     check('password')
+    .optional()
         .custom((password) => {
             if (!isEmptyObject(password)) {
                 throw new Error('Attribute Not Allowed');
@@ -202,30 +203,35 @@ exports.validateEditProfile = [
         }),
 
     check('new_password')
+    .optional()
         .custom((new_password) => {
             if (!isEmptyObject(new_password)) {
                 throw new Error('Attribute Not Allowed');
             }
         }),
     check('is_verified')
+    .optional()
         .custom((is_verified) => {
             if (!isEmptyObject(is_verified)) {
                 throw new Error('Attribute Not Allowed');
             }
         }),
     check('google_id')
+    .optional()
         .custom((google_id) => {
             if (!isEmptyObject(google_id)) {
                 throw new Error('Attribute Not Allowed');
             }
         }),
     check('role_id')
+    .optional()
         .custom((role_id) => {
             if (!isEmptyObject(role_id)) {
                 throw new Error('Attribute Not Allowed');
             }
         }),
     check('deleted_at')
+    .optional()
         .custom((deleted_at) => {
             if (!isEmptyObject(deleted_at)) {
                 throw new Error('Attribute Not Allowed');
