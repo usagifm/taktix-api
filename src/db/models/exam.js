@@ -98,6 +98,13 @@ module.exports = (sequelize, DataTypes) => {
                 },
             },
 
+            is_public: {
+                type: DataTypes.BOOLEAN,
+                validate: {
+                    notEmpty: true,
+                },
+            },
+
             rating: {
                 type: DataTypes.FLOAT,
                 defaultValue: 0,

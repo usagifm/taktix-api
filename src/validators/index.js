@@ -7,7 +7,7 @@ exports.validateCheckUsername = [
         .withMessage('Nama wajib di isi')
         .notEmpty()
         .withMessage('Nama tidak boleh kosong')
-        .isLength({ min:5 })
+        .isLength({ min: 5 })
         .withMessage('Nama minimal terdiri dari 5 karakter'),
 
     check('username')
@@ -15,7 +15,7 @@ exports.validateCheckUsername = [
         .withMessage('Username wajib di isi')
         .notEmpty()
         .withMessage('Username tidak boleh kosong')
-        .isLength({ min:5 })
+        .isLength({ min: 5 })
         .withMessage('Username minimal terdiri dari 5 karakter'),
 ]
 exports.validateCheckEmailAndPhone = [
@@ -43,7 +43,7 @@ exports.validateRegisterUser = [
         .withMessage('Nama wajib di isi')
         .notEmpty()
         .withMessage('Nama tidak boleh kosong')
-        .isLength({ min:5 })
+        .isLength({ min: 5 })
         .withMessage('Nama minimal terdiri dari 5 karakter'),
 
     check('email')
@@ -59,7 +59,7 @@ exports.validateRegisterUser = [
         .withMessage('Username wajib di isi')
         .notEmpty()
         .withMessage('Username tidak boleh kosong')
-        .isLength({ min:5 })
+        .isLength({ min: 5 })
         .withMessage('Username minimal terdiri dari 5 karakter'),
 
     check('phone_number')
@@ -77,7 +77,7 @@ exports.validateRegisterUser = [
         .withMessage('Password wajib di isi')
         .notEmpty()
         .withMessage('Password tidak boleh kosong')
-        .isLength({ min:6 })
+        .isLength({ min: 6 })
         .withMessage('Password minimal harus terdiri dari 6 karakter'),
 
     check('password_confirmation')
@@ -93,7 +93,7 @@ exports.validateRegisterUser = [
             }
             return true
         })
-        .isLength({ min:6 })
+        .isLength({ min: 6 })
         .withMessage('Password minimal harus terdiri dari 6 karakter'),
 
     check('role_id')
@@ -121,7 +121,7 @@ exports.validateLoginUser = [
         .withMessage('Password wajib di isi')
         .notEmpty()
         .withMessage('Password tidak boleh kosong')
-        .isLength({ min:6 })
+        .isLength({ min: 6 })
         .withMessage('Password minimal harus teridiri dari 6 karakter'),
 ]
 exports.validateEditPassword = [
@@ -159,30 +159,26 @@ exports.validateEditPassword = [
 ]
 exports.validateEditProfile = [
     check('name')
-        .exists()
-        .withMessage('Nama wajib di isi')
+        .optional()
         .notEmpty()
         .withMessage('Nama tidak boleh kosong')
-        .isLength({ min:5 })
+        .isLength({ min: 5 })
         .withMessage('Nama minimal terdiri dari 5 karakter'),
 
     check('username')
-        .exists()
-        .withMessage('Username wajib di isi')
+        .optional()
         .notEmpty()
         .withMessage('Username tidak boleh kosong')
-        .isLength({ min:5 })
+        .isLength({ min: 5 })
         .withMessage('Username minimal terdiri dari 5 karakter'),
 
     check('gender')
-        .exists()
-        .withMessage('Gender wajib di isi')
+        .optional()
         .notEmpty()
         .withMessage('Gender tidak boleh kosong'),
 
     check('phone_number')
-        .exists()
-        .withMessage('Nomor HP wajib di isi')
+        .optional()
         .notEmpty()
         .withMessage('Nomor HP tidak boleh kosong')
         .isMobilePhone()
@@ -190,13 +186,74 @@ exports.validateEditProfile = [
         .isLength({ min: 11, max: 13 })
         .withMessage('Nomor HP minimal 11 digit dan maksimal 13 digit'),
 
-    check('email')
-        .exists()
-        .withMessage('Email wajib di isi')
+    check('birth_date')
+        .optional()
         .notEmpty()
-        .withMessage('Email tidak boleh kosong')
-        .isEmail()
-        .withMessage('Format email salah'),
+        .withMessage('Tanggal lahir tidak boleh kosong'),
+
+    check('province_id')
+        .optional()
+        .notEmpty()
+        .withMessage('Id Provinsi tidak boleh kosong'),
+
+    check('province')
+        .optional()
+        .notEmpty()
+        .withMessage('Provinsi tidak boleh kosong'),
+
+    check('password')
+        .optional()
+        .custom((password) => {
+            if (!isEmptyObject(password)) {
+                throw new Error('Attribute Not Allowed');
+            }
+        }),
+
+    check('new_password')
+        .optional()
+        .custom((new_password) => {
+            if (!isEmptyObject(new_password)) {
+                throw new Error('Attribute Not Allowed');
+            }
+        }),
+    check('is_verified')
+        .optional()
+        .custom((is_verified) => {
+            if (!isEmptyObject(is_verified)) {
+                throw new Error('Attribute Not Allowed');
+            }
+        }),
+
+    check('fcm_token')
+        .optional()
+        .custom((new_password) => {
+            if (!isEmptyObject(new_password)) {
+                throw new Error('Attribute Not Allowed');
+            }
+        }),
+
+    check('google_id')
+        .optional()
+        .custom((google_id) => {
+            if (!isEmptyObject(google_id)) {
+                throw new Error('Attribute Not Allowed');
+            }
+        }),
+    check('role_id')
+        .optional()
+        .custom((role_id) => {
+            if (!isEmptyObject(role_id)) {
+                throw new Error('Attribute Not Allowed');
+            }
+        }),
+    check('deleted_at')
+        .optional()
+        .custom((deleted_at) => {
+            if (!isEmptyObject(deleted_at)) {
+                throw new Error('Attribute Not Allowed');
+            }
+        }),
+
 ]
 
 exports.validateEditPhotoProfile = [
@@ -330,7 +387,7 @@ exports.validateCreateClass = [
         .withMessage('Limit kuota kelas wajib di isi')
         .notEmpty()
         .withMessage('Limit kuota kelas tidak boleh kosong'),
-        
+
 ]
 exports.validateEditClass = [
     check('class_name')
@@ -367,9 +424,9 @@ exports.validateInsertAnswerLksExamQuestion = [
     check('answer')
         .exists()
         .withMessage('Answer wajib di isi')
-        // .notEmpty()
-        // .withMessage('Answer tidak boleh kosong')
-        ,
+    // .notEmpty()
+    // .withMessage('Answer tidak boleh kosong')
+    ,
 
     check('lks_attemption_id')
         .exists()
@@ -393,9 +450,9 @@ exports.validateUpdateAnswerLksExamQuestion = [
     check('answer')
         .exists()
         .withMessage('Answer wajib di isi')
-        // .notEmpty()
-        // .withMessage('Answer tidak boleh kosong')
-        ,
+    // .notEmpty()
+    // .withMessage('Answer tidak boleh kosong')
+    ,
 
     check('lks_attemption_id')
         .exists()

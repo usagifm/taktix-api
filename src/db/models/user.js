@@ -143,6 +143,7 @@ module.exports = (sequelize, DataTypes) => {
             fcm_token: DataTypes.STRING,
             provider: DataTypes.STRING,
             is_verified: DataTypes.BOOLEAN,
+            school: DataTypes.STRING,
         },
         {
             sequelize,
