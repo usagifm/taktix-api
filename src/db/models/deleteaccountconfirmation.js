@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
          * The `models/index` file will call this method automatically.
          */
         static associate(models) {
-            VerificationToken.belongsTo(models.User, {
+            DeleteAccountConfirmationToken.belongsTo(models.User, {
                 as: 'user',
                 foreignKey: 'user_id',
                 // foreignKeyConstraint: true,
