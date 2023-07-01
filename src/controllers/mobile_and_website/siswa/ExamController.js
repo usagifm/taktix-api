@@ -370,7 +370,7 @@ const ExamController = {
             var examAttemption = await ExamAttemptions.findOne({
                 include: [
                     {model: ExamAttemptionsAnswers, as: 'answers',attributes:{exclude: ['is_correct','is_corrected']}},
-                    { model: Exam, as: 'exam', include:{ model: ExamQuestions, as: "questions",attributes:{exclude: ['answer']}} },
+                    { model: Exam, as: 'exam', include:{ model: ExamQuestions, as: "questions",order: [['created_at', 'DESC']], attributes:{exclude: ['answer']}} },
                 ],
                 where:{
                     exam_id: exam.id,
@@ -842,7 +842,7 @@ const ExamController = {
             var examAttemption = await ExamAttemptions.findOne({
                 include: [
                     {model: ExamAttemptionsAnswers, as: 'answers'},
-                    { model: Exam, as: 'exam', include:{ model: ExamQuestions, as: "questions"} },
+                    { model: Exam, as: 'exam', include:{ model: ExamQuestions, order: [['created_at', 'DESC']],as: "questions"} },
                 ],
                 where:{
                     exam_id: req.params.exam_id,
