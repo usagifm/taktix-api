@@ -370,7 +370,7 @@ const ExamController = {
             var examAttemption = await ExamAttemptions.findOne({
                 include: [
                     {model: ExamAttemptionsAnswers, as: 'answers',attributes:{exclude: ['is_correct','is_corrected']}},
-                    { model: Exam, as: 'exam', include:{ model: ExamQuestions, as: "questions",order: ['created_at', 'DESC'], attributes:{exclude: ['answer']}} },
+                    { model: Exam, as: 'exam' },
                 ],
                 where:{
                     exam_id: exam.id,
@@ -381,10 +381,22 @@ const ExamController = {
                     finished_at:{
                         [Op.gt]: NOW,
                     }
-                },attributes:{exclude: ['total_correct','total_incorrect','total_empty','score']}
+                },
+          
+                attributes:{exclude: ['total_correct','total_incorrect','total_empty','score']}
             })
             
             if(examAttemption){
+
+                const questions = await ExamQuestions.findAll({
+                    order: [['created_at', 'ASC']],
+                    where:{
+                        exam_id: examAttemption.exam.id
+                    },attributes:{exclude: ['answer']}
+        
+                });
+
+                examAttemption.exam.setDataValue('questions', questions)
 
                 return res.status(200).send(examAttemption)
 
@@ -405,13 +417,25 @@ const ExamController = {
                 var createdExamAttemption = await ExamAttemptions.findOne({
                     include: [
                         {model: ExamAttemptionsAnswers, as: 'answers',attributes:{exclude: ['is_correct','is_corrected']}},
-                   {  model: Exam, as: 'exam', include:{ model: ExamQuestions, as: "questions",order: ['created_at', 'DESC'],attributes:{exclude: ['answer']}} }
+                   {  model: Exam, as: 'exam', include:{ model: ExamQuestions, as: "questions",attributes:{exclude: ['answer']}} }
                ],
+
                where:{
                    id: newExamAttemption.id,
                    user_id: req.user.user.id
-               }
+               },
+
            })
+
+           const questions = await ExamQuestions.findAll({
+            order: [['created_at', 'ASC']],
+            where:{
+                exam_id: examAttemption.exam.id
+            },attributes:{exclude: ['answer']}
+
+        });
+
+        examAttemption.exam.setDataValue('questions', questions)
 
                 return res.status(200).send(createdExamAttemption)
             }
