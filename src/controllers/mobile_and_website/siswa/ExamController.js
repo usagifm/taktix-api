@@ -370,8 +370,8 @@ const ExamController = {
             var examAttemption = await ExamAttemptions.findOne({
                 include: [
                     {model: ExamAttemptionsAnswers, as: 'answers',attributes:{exclude: ['is_correct','is_corrected']}},
-                    { model: Exam, as: 'exam' },
-                ],
+               {  model: Exam, as: 'exam', include:{ model: ExamQuestions, as: "questions",attributes:{exclude: ['answer']}} }
+           ],
                 where:{
                     exam_id: exam.id,
                     user_id: req.user.user.id,
