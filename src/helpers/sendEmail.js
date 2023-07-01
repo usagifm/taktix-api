@@ -12,6 +12,11 @@ module.exports = {
                 pass: '3;IxmSzy,S}N',
             },
         })
+        var link =
+        `${process.env.APP_URL}/verification?verificationToken=` +
+        token +
+        '&email=' +
+        toEmail
 
         var mailOptions = {
             from: 'support@sanedu.id',
