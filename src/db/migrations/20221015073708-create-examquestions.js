@@ -15,7 +15,7 @@ module.exports = {
       },
 
       question: {
-        type: Sequelize.STRING,
+        type: Sequelize.T,
         allowNull: false,
       },
 

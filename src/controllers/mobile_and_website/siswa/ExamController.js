@@ -44,6 +44,7 @@ const ExamController = {
                 ],
                 // include: [{model: User}],
                 where,
+                order: [['created_at', 'DESC']],
                 offset: offset,
                 limit: per_page,
         
