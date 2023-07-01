@@ -420,7 +420,7 @@ const AuthController = {
             if (!user) {
                 return errorResponse(res, 400, 'Email tidak ditemukan', [])
             } else {
-                const newpassword = Randomstring.generate(12)
+                const newpassword = Randomstring.generate(10)
                 const hashedPassword = await bcrypt.hash(newpassword, saltRounds)
 
                 await User.update(
