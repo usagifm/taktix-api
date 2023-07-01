@@ -1,6 +1,9 @@
 import { errorResponse } from '../../../helpers/errorResponse'
 import { User, DeleteAccountConfirmationToken } from '../../../db/models'
 import { sendEmailDeleteAccount } from '../../../helpers/sendEmail'
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op
+
 
 const DeleteAccountConfirmationController = {
     async requestDelete(req, res, next) {
@@ -48,10 +51,25 @@ const DeleteAccountConfirmationController = {
 
     },
 
-    // async confirmtDelete(req, res, next) {
+    // async confirmDelete(req, res, next) {
+
+    //     const errors = validationResult(req);
+    //     if (!errors.isEmpty()) {
+    //         return errorResponse(res, 400, "Validation error", errors.array())
+    //       }
+          
+
     //     var user_id = req.user.user.id
+        
+    //     const NOW = new Date();
     //     DeleteAccountConfirmationToken.findOne({
-    //         where: { user_id: user.id },
+    //         where: { user_id: user_id,
+    //             valid_through:{
+    //                 [Op.gt]: NOW,
+    //             },
+    //             token: req.body.token
+    //         }
+        
     //     })
     //         .then((foundToken) => {
     //             if (foundToken) {
