@@ -391,7 +391,7 @@ const ExamController = {
                 const questions = await ExamQuestions.findAll({
                     order: [['created_at', 'ASC']],
                     where:{
-                        exam_id: examAttemption.exam.id
+                        exam_id: exam.id
                     },attributes:{exclude: ['answer']}
         
                 });
@@ -430,7 +430,7 @@ const ExamController = {
            const questions = await ExamQuestions.findAll({
             order: [['created_at', 'ASC']],
             where:{
-                exam_id: examAttemption.exam.id
+                exam_id: exam.id
             },attributes:{exclude: ['answer']}
 
         });
