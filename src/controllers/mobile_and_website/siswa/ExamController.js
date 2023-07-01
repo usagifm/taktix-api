@@ -369,10 +369,26 @@ const ExamController = {
 
             var examAttemption = await ExamAttemptions.findOne({
                 include: [
-                    {model: ExamAttemptionsAnswers, as: 'answers',attributes:{exclude: ['is_correct','is_corrected']}},
-               {  model: Exam, as: 'exam', include:{ model: ExamQuestions, as: "questions",attributes:{exclude: ['answer']}} }
-           ],
-                where:{
+                    {
+                      model: ExamAttemptionsAnswers,
+                      as: 'answers',
+                      attributes: { exclude: ['is_correct', 'is_corrected'] },
+                    },
+                    {
+                      model: Exam,
+                      as: 'exam',
+                      include: {
+                        model: ExamQuestions,
+                        as: 'questions',
+                        separate: true, // Add this line to use a separate subquery for ordering
+                        order: [['created_at', 'ASC']], // Sorting 'questions' by 'created_at' in ascending order
+                        attributes: { exclude: ['answer'] },
+                      },
+                    },
+                  ],
+        //    order:  [{ model: Exam, as: 'exam',include:[{ model: ExamQuestions, as: "questions"},'created_at','ASC'] }, 'created_at', 'ASC'],               
+             //    order: [[  [{  model: Exam, as: 'exam',include:[{ model: ExamQuestions, as: "questions"}, 'ExamQuestions.created_at', 'ASC'] }], 'ExamQuestions.created_at', 'ASC']],
+           where:{
                     exam_id: exam.id,
                     user_id: req.user.user.id,
                     started_at:{
@@ -383,8 +399,9 @@ const ExamController = {
                     }
                 },
           
-                attributes:{exclude: ['total_correct','total_incorrect','total_empty','score']}
+                attributes:{exclude: ['total_correct','total_incorrect','total_empty','score']},
             })
+            
             
             if(examAttemption){
 
@@ -413,19 +430,31 @@ const ExamController = {
                         score: 0
                     }
                 )
-
                 var createdExamAttemption = await ExamAttemptions.findOne({
                     include: [
-                        {model: ExamAttemptionsAnswers, as: 'answers',attributes:{exclude: ['is_correct','is_corrected']}},
-                   {  model: Exam, as: 'exam', include:{ model: ExamQuestions, as: "questions",attributes:{exclude: ['answer']}} }
-               ],
-
-               where:{
-                   id: newExamAttemption.id,
-                   user_id: req.user.user.id
-               },
-
-           })
+                      {
+                        model: ExamAttemptionsAnswers,
+                        as: 'answers',
+                        attributes: { exclude: ['is_correct', 'is_corrected'] },
+                      },
+                      {
+                        model: Exam,
+                        as: 'exam',
+                        include: {
+                          model: ExamQuestions,
+                          as: 'questions',
+                          separate: true, // Add this line to use a separate subquery for ordering
+                          order: [['created_at', 'ASC']], // Sorting 'questions' by 'created_at' in ascending order
+                          attributes: { exclude: ['answer'] },
+                        },
+                      },
+                    ],
+                    where: {
+                      id: newExamAttemption.id,
+                      user_id: req.user.user.id,
+                    },
+                  });                  
+                  
 
         //    const questions = await ExamQuestions.findAll({
         //     order: [['created_at', 'ASC']],
