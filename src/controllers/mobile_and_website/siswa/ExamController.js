@@ -388,15 +388,15 @@ const ExamController = {
             
             if(examAttemption){
 
-                const questions = await ExamQuestions.findAll({
-                    order: [['created_at', 'ASC']],
-                    where:{
-                        exam_id: exam.id
-                    },attributes:{exclude: ['answer']}
+                // const questions = await ExamQuestions.findAll({
+                //     order: [['created_at', 'ASC']],
+                //     where:{
+                //         exam_id: exam.id
+                //     },attributes:{exclude: ['answer']}
         
-                });
+                // });
 
-                examAttemption.exam.setDataValue('questions',questions);
+                // examAttemption.exam.setDataValue('questions',questions);
 
                 return res.status(200).send(examAttemption)
 
@@ -427,15 +427,15 @@ const ExamController = {
 
            })
 
-           const questions = await ExamQuestions.findAll({
-            order: [['created_at', 'ASC']],
-            where:{
-                exam_id: exam.id
-            },attributes:{exclude: ['answer']}
+        //    const questions = await ExamQuestions.findAll({
+        //     order: [['created_at', 'ASC']],
+        //     where:{
+        //         exam_id: exam.id
+        //     },attributes:{exclude: ['answer']}
 
-        });
+        // });
 
-        examAttemption.exam.setDataValue('questions',questions);
+        // examAttemption.exam.setDataValue('questions',questions);
 
                 return res.status(200).send(createdExamAttemption)
             }
