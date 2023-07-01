@@ -396,7 +396,7 @@ const ExamController = {
         
                 });
 
-                examAttemption.exam.setDataValue('questions', questions)
+               await examAttemption.exam.setDataValue('questions', questions)
 
                 return res.status(200).send(examAttemption)
 
@@ -435,7 +435,7 @@ const ExamController = {
 
         });
 
-        examAttemption.exam.setDataValue('questions', questions)
+        await examAttemption.exam.setDataValue('questions', questions)
 
                 return res.status(200).send(createdExamAttemption)
             }
