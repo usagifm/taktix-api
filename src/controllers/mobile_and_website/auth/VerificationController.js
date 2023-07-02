@@ -39,7 +39,7 @@ const VerificationController = {
                                         return res
                                             .status(202)
                                             .json({
-                                                message: `Horee ${user.email}, aku kamu sudah terverifikasi, silahkan login di aplikasi yaa.`,
+                                                message: `Horee ${user.email}, akun kamu sudah terverifikasi, silahkan login di aplikasi yaa.`,
                                             })
                                     })
                                     .catch((reason) => {
