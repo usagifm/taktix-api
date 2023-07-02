@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('delete_account_confirmation_token', {
+    await queryInterface.createTable('delete_account_confirmation_tokens', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -40,6 +40,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('delete_account_confirmation_token');
+    await queryInterface.dropTable('delete_account_confirmation_tokens');
   }
 };

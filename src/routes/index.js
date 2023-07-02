@@ -12,6 +12,7 @@ import ExamAnswerController from '../controllers/mobile_and_website/siswa/ExamAn
 import TutorClassController from '../controllers/mobile_and_website/tutor/TutorClassController'
 import TutorLksController from '../controllers/mobile_and_website/tutor/TutorLksController'
 import UserClassController from '../controllers/mobile_and_website/siswa/UserClassController'
+import DeleteAccountConfirmationController from '../controllers/mobile_and_website/auth/DeleteAccountConfirmationController'
 
 
 const routes = (app) => {   
@@ -33,6 +34,10 @@ const routes = (app) => {
     app.delete('/logout', AuthController.logout)
     app.post('/forgot', validator.validateForgot, AuthController.forgot)
     app.get('/verification', VerificationController.verifyUser)
+    
+    // Account Deletion
+    app.post('/request-delete-account',checkToken ,DeleteAccountConfirmationController.requestDelete)
+    app.delete('/confirm-delete-account',checkToken ,validator.validateConfirmDeleteAccount, DeleteAccountConfirmationController.confirmDelete)
 
     // User Google Sign In
     app.post(
