@@ -495,3 +495,19 @@ exports.validateCorrectedLksExamAnswer = [
         .withMessage('Jawaban Id tidak boleh kosong'),
 
 ]
+
+
+exports.validateConfirmDeleteAccount = [
+    check('confirmation_id')
+        .exists()
+        .withMessage('Confirmation Id wajib di isi')
+        .notEmpty()
+        .withMessage('Confirmation Id tidak boleh kosong')
+    ,
+
+    check('token')
+        .exists()
+        .withMessage('Token wajib di isi')
+        .notEmpty()
+        .withMessage('Token tidak boleh kosong'),
+]
