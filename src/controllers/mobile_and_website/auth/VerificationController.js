@@ -3,6 +3,12 @@ import { User, VerificationToken } from '../../../db/models'
 
 const VerificationController = {
     async verifyUser(req, res, next) {
+
+
+        if(!req.query.verificationToken || !req.query.email){
+            return errorResponse(res, 400, 'Oops, data tidak valid.', [])
+        }
+
         User.findOne({
             where: { email: req.query.email },
         })
@@ -10,27 +16,37 @@ const VerificationController = {
                 if (user.is_verified) {
                     return res
                         .status(202)
-                        .json({ message: 'Email Already Verified' })
+                        .json({ message: 'Email kamu sudah terverifikasi.' })
                 } else {
                     return VerificationToken.findOne({
-                        where: { user_id: user.id },
+                        where: { 
+                            user_id: user.id,
+                            token: req.query.verificationToken 
+                         },
                     })
                         .then((foundToken) => {
                             if (foundToken) {
                                 return user
                                     .update({ is_verified: true })
                                     .then((updatedUser) => {
+
+                                        VerificationToken.destroy({
+                                            where: {
+                                                user_id: user.id,
+                                                token: req.query.verificationToken
+                                            }
+                                        })
                                         return res
                                             .status(202)
                                             .json({
-                                                message: `User with ${user.email} has been verified`,
+                                                message: `Horee ${user.email}, aku kamu sudah terverifikasi, silahkan login di aplikasi yaa.`,
                                             })
                                     })
                                     .catch((reason) => {
                                         return errorResponse(
                                             res,
                                             403,
-                                            'Verification failed',
+                                            'Verifikasi Gagal',
                                             []
                                         )
                                     })
@@ -38,18 +54,18 @@ const VerificationController = {
                                 return errorResponse(
                                     res,
                                     403,
-                                    'Token Expired',
+                                    'Token sudah expired.',
                                     []
                                 )
                             }
                         })
                         .catch((reason) => {
-                            return errorResponse(res, 403, 'Token Expired', [])
+                            return errorResponse(res, 403, 'Token sudah expired.', [])
                         })
                 }
             })
             .catch((reason) => {
-                return errorResponse(res, 404, 'Email not found', [])
+                return errorResponse(res, 404, 'Akun tidak ditemukan.', [])
             })
     },
 }
