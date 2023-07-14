@@ -7,7 +7,15 @@ module.exports = {
         dialect: 'mysql',
         define: {
             underscored: true,
-          }
+          },
+        
+            pool: {
+                max: 200, // default connection pool size
+                min: 0,
+                acquire: 30000,
+                idle: 10000
+            }
+        
 
     },
     production: {
@@ -20,6 +28,13 @@ module.exports = {
                 rejectUnauthorized: false,
             },
         },
+        
+        pool: {
+            max: 200, // default connection pool size
+            min: 0,
+            acquire: 30000,
+            idle: 10000
+        }
 
     },
 }
