@@ -308,7 +308,7 @@ const AuthController = {
                 }
 
                 return errorResponse(res, 400, 'Validation error', [{
-                    msg: "Email must be unique",
+                    msg: "Email sudah digunakan, silahkan gunakan email lain.",
                     param: "email",
                     location: "body"
                 }])
