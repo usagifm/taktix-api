@@ -65,6 +65,15 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
+
+            correct_statement_label:{
+                type: DataTypes.STRING,
+            },
+
+            incorrect_statement_label:{
+                type: DataTypes.STRING,
+            }
+
         },
         {
             sequelize,

@@ -3,6 +3,8 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
 
+    const Op = Sequelize.Op
+
     queryInterface.bulkInsert('set_masters', [
       {
           id: 6004,
