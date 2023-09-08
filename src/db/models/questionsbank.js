@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
 
+    exam_category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+
     a: {
       type: DataTypes.STRING,
       allowNull: false,
